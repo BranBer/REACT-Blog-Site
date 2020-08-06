@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import StyledTitle from '../SiteTitle/SiteTitle'
 import styled from 'styled-components';
-import NavBar from '../NavBar/NavBar';
 import Panel from '../BlogPanel/BlogPanel';
-import SiteContent from '../SiteContent/SiteContent';
-import {CurrentSelected} from '../../contexts/currentSelected';
+import SubmissionForm from '../Submissions/SubmissionForm'
 
 const SiteLogo = styled.img`
     height: 175px;
@@ -47,17 +45,13 @@ const BannerImg = styled.div`
 const SiteHeader = () => 
 {
     let selected = null;
-    let currentContent = null;
+
+    const [currentContent, setContent] = useState({content: null});
 
     const changeCurrentSelected = (content) =>
     {
-        selected = content;
-        console.log(selected);
-
-        if(selected == 'Blog')
-        {
-            currentContent = (<Panel/>);
-        }
+        setContent({content: content});
+        console.log(currentContent.content);
     }
 
     return(
@@ -66,7 +60,10 @@ const SiteHeader = () =>
             <StyledTitle selected = { changeCurrentSelected }/>
             <BannerImg />
 
-             { currentContent }
+             
+            { currentContent.content == 'Blog'? <Panel/> : 
+              currentContent.content == 'Submit'? <SubmissionForm/>: null}
+             
         </HeaderDiv>
     );
 }

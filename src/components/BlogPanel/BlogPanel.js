@@ -17,7 +17,7 @@ const StyledPanel = styled.div`
 
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
-    border: 2px solid #4D457A;
+    border: 5px solid #4D457A;
 
     color: #FF6565;
 
