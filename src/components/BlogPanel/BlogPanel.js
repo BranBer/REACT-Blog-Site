@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import BlogPost from '../BlogPost/BlogPost'
+import BlogPosts from '../BlogPost/BlogPosts';
+import GalleryImage from '../GalleryImage/GalleryImage';
+
 
 const StyledPanel = styled.div`
     position: absolute;
@@ -9,6 +11,8 @@ const StyledPanel = styled.div`
     width: 700px;;
     height: 100%;
     margin-left: 10%;
+
+    overflow-y: scroll;
 
     top: 40%;
 
@@ -37,7 +41,7 @@ const StyledPanel = styled.div`
 
 const Panel = () => 
 {
-    const [ BlogPosts, ChangeBlogPosts ] = useState(
+    const [ MyBlogPosts, ChangeBlogPosts ] = useState(
     {
         posts: []
     });
@@ -45,8 +49,7 @@ const Panel = () =>
     return (
     <StyledPanel>
         <h2>Posts</h2>
-        <hr/>
-
+        <BlogPosts/>
     </StyledPanel>);
 }
 
