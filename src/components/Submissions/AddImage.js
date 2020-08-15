@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import ReactCrop from 'react-image-crop';
 import getCroppedImg from './getCroppedImage';
 import 'react-image-crop/dist/ReactCrop.css';
+import extractImageFileExtensionFromBase64 from './utils';
+
 const ImageExpander = styled.div`
     display: block;
     vertical-align: top;
@@ -45,7 +47,7 @@ const ImageModifier = styled.div`
     border: 5px solid #FF6565;
     display: block;
     vertical-align: top;
-
+    
     #modifier
     { 
         height: 350px;
@@ -67,33 +69,49 @@ const ImageModifier = styled.div`
 
     canvas
     {
-        height: auto;
-        width: auto
+        height: 350px;
+        width: 350px;
     }
 `;
 
+const DivStack = styled.div`
+    display: block;
+    vertical-align: top;
+`;
  
 const ImageStyler = (props) =>
 {
     let imgPrev = React.createRef();
     const [crop, setCrop] = useState(
         {
+            croppedImage: null,
             crop: {
                 aspect: 1/ 1,
                 }
-        });   
+        });
+        
+    const [croppedImage, updateCroppedImage] = useState({
+        img: null,
+        fileExtension: null});
     
     const handleImageLoaded = (image) =>
     {
         console.log(image);
+        let croppedImageCopy = croppedImage;
+
+        croppedImageCopy.fileExtension = extractImageFileExtensionFromBase64(props.image);
+        croppedImageCopy.img = image;
+
+        updateCroppedImage(croppedImageCopy);
     }
 
     const handleOnCropComplete = (crop, pixelCrop) =>
     {
         const canvasRef = imgPrev.current;
         const image = new Image();
+        let croppedImageCopy = croppedImage;
         image.src = props.image;
-
+        
         if(pixelCrop.unit === '%')
         {
             pixelCrop.height = image.height * (pixelCrop.height/100);
@@ -103,13 +121,25 @@ const ImageStyler = (props) =>
             pixelCrop.x = image.width * (pixelCrop.x/100);
         }
 
-        getCroppedImg(canvasRef, props.image, pixelCrop);
+        let cropped = getCroppedImg(canvasRef, props.image, pixelCrop);
+        croppedImageCopy.img = cropped;
+
+        updateCroppedImage(croppedImageCopy);
+        
+        if(cropped == 'data:,')
+        {
+            let ext = extractImageFileExtensionFromBase64(props.image);
+            props.imageUpdater(props.ieid, {img: props.image, fileExtension: ext});
+        }
+        else
+        {
+            props.imageUpdater(props.ieid, croppedImage);
+        }
     }
 
 
     const updateImage = (newCrop) =>
     {
-        //props.updateImage();
         setCrop(
             {
                 crop: newCrop
@@ -193,20 +223,21 @@ const AddImage = (props) =>
     }
 
     return (
-    
-        <ImageExpander>            
+        <DivStack>        
             {
-                showComponent? <div>
+                showComponent? 
+                <ImageExpander>
                     <input type = "file"
                     accept="image/png, image/jpeg"
                     id = {props.ieid}
                     onChange = {(event) => UpdateImage(event)}/>
                     <button type = "button" id = "expand" onClick = {()=>ToggleImageStyler()}>+</button>
                     <button type = "button" id = "remove" onClick = {()=>removeComponent()}>Remove</button>
-                    <ImageStyler style = {StyleImage.style} image = {StyleImage.image} updateImage = {props.updateImage}/>
-                </div>: null
+                    <ImageStyler ieid = {props.ieid} style = {StyleImage.style} image = {StyleImage.image} imageUpdater = {props.imageUpdater}/>
+                </ImageExpander> : null
             }
-        </ImageExpander>
+        </DivStack>  
+        
     );
 }
 

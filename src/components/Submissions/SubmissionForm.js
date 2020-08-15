@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import AddImage from './AddImage';
+import base64Stringtofile from './stringToFile';
+import axios from 'axios';
+import extractImageFileExtensionFromBase64 from './utils';
 
 const StyledForm = styled.div`
 
@@ -28,6 +31,15 @@ const StyledForm = styled.div`
         margin-top: 20px;
     }
 
+    #post_submit
+    {
+        display:block;
+        vertical-align: top;
+        height: auto;
+        width: auto;
+        margin-top: 20px;
+    }
+
     textarea
     {
         display:block;
@@ -43,9 +55,9 @@ const StyledForm = styled.div`
         display:block;
         vertical-align: top;
 
-        margin: 0px 0 0px 0;
+        margin: 50px 0 0px 0;
         background-color: lightgreen;
-        position: absolute;
+        position: relative;
 
         border-radius: 50px;
         border: 1px solid lightgreen;
@@ -78,7 +90,13 @@ const SubmissionForm = (props) =>
     const updateNewImage = (id, img) =>
     {
         let data = postData;
-        data['image' + id.toString()] = img;
+        let key = 'image' + id.toString();
+        let filename = key + '.' + img.fileExtension;
+
+        console.log(filename);
+
+        const croppedImageFile = base64Stringtofile(img.img, filename);
+        data[key] = croppedImageFile;
 
         updatePostData(data);
     }
@@ -102,9 +120,24 @@ const SubmissionForm = (props) =>
     const updateContent = (event) =>
     {   
         let data = postData;
+        console.log(data);
+        
         data['post_content'] = event.target.value;
 
         updatePostData(data);
+    }
+
+    const uploadContent = () =>
+    {
+        let data = postData;
+        console.log(data);
+        
+        axios.post(
+            'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/',
+            {...data}            
+        ).then((response) => {
+            console.log(response.data);
+        });
     }
 
     return (
@@ -114,20 +147,18 @@ const SubmissionForm = (props) =>
                 <input type = "text" placeholder = "Post Title" id = "post_title" onChange = {(event) => updateTitle(event)}/>
 
                 <input type = "text" placeholder = "Post Author" id = "post_author" onChange = {(event) => updateAuthor(event)}/>
-                
+
+                <button id = "AnotherImage" type = "button" onClick = {() => addAnotherImage()}>+Image</button>
+
                 {
                     images.count.map((number, index) => 
                     {
-                        return (<AddImage key = {"AddImage" + index.toString()} ieid = {"ie" + number.toString()}/>);
+                        return (<AddImage key = {"AddImage" + index.toString()} ieid = {"ie" + number.toString()} imageUpdater = {updateNewImage}/>);
                     })
                 }
 
-                <br/>
-                <button id = "AnotherImage" type = "button" onClick = {() => addAnotherImage()}>+</button>
-                <br/>
-
                 <textarea form = "post_maker" placeholder = "Enter Post Content" onChange = {(event) => updateContent(event)}></textarea>
-                <input type = "submit" value = "Submit Post" id = "post_submit"/>
+                <button type = "button" id = "post_submit" onClick = {uploadContent}>Submit Post</button>
             </form>
         </StyledForm>);
 }
