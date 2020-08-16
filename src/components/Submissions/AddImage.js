@@ -130,10 +130,12 @@ const ImageStyler = (props) =>
         {
             let ext = extractImageFileExtensionFromBase64(props.image);
             props.imageUpdater(props.ieid, {img: props.image, fileExtension: ext});
+            console.log(props.image);
         }
         else
         {
             props.imageUpdater(props.ieid, croppedImage);
+            console.log(croppedImage);
         }
     }
 

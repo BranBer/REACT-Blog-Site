@@ -13,7 +13,7 @@ const BlogPosts = (props) =>
 
     useEffect( () => {
         let data = null;
-        axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ (PostData.position + 3) + '/').then(response => {
+        axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ (PostData.position + 15) + '/').then(response => {
             updatePostData({data: response.data,
                             position: PostData.position});
         });

@@ -91,7 +91,9 @@ const SubmissionForm = (props) =>
     {
         let data = postData;
         let key = 'image' + id.toString();
-        let filename = key + '.' + img.fileExtension;
+        let today = Date.now().toString();
+        let nonceString = Math.random().toString(36).substring(2, 7);
+        let filename = key + today + nonceString + '.' + img.fileExtension;        
 
         console.log(filename);
 
@@ -131,13 +133,43 @@ const SubmissionForm = (props) =>
     {
         let data = postData;
         console.log(data);
+
+        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/';
+
+        let form_data = new FormData();
+        let dataEntries = Object.entries(data);
+
+        for (let v in dataEntries)
+        {
+            //console.log(dataEntries[v]);
+            let key = dataEntries[v][0];
+            let value = dataEntries[v][1];
+
+            if(key.substring(0,5) == 'image')
+            {                
+                form_data.append(key, value, value.name);
+            }
+            else
+            {
+                form_data.append(key, value);
+            }
+        }
+
         
         axios.post(
-            'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/',
-            {...data}            
-        ).then((response) => {
+            url,
+            form_data,
+            {
+                headers : {
+                'Content-Type': 'multipart/form-data'
+                }
+            }   
+        )
+        .then((response) => {
             console.log(response.data);
-        });
+        })
+        .catch(err => console.log(err));
+        
     }
 
     return (
