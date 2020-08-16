@@ -103,6 +103,21 @@ const SubmissionForm = (props) =>
         updatePostData(data);
     }
 
+    const removeImage = (id) =>
+    {
+        let key = 'image' + id.toString();
+        let data = postData;
+        
+        console.log(key);
+        console.log('before');
+        console.log(data);
+        data[key] = undefined;
+
+        console.log('after');
+        console.log(data);
+        updatePostData(data);
+    }
+
     const updateTitle = (event) =>
     {   
         let data = postData;
@@ -145,11 +160,11 @@ const SubmissionForm = (props) =>
             let key = dataEntries[v][0];
             let value = dataEntries[v][1];
 
-            if(key.substring(0,5) == 'image')
+            if(key.substring(0,5) == 'image' && value !== undefined)
             {                
                 form_data.append(key, value, value.name);
             }
-            else
+            else if(value !== undefined)
             {
                 form_data.append(key, value);
             }
@@ -183,7 +198,10 @@ const SubmissionForm = (props) =>
                 {
                     images.count.map((number, index) => 
                     {
-                        return (<AddImage key = {"AddImage" + index.toString()} ieid = {"ie" + number.toString()} imageUpdater = {updateNewImage}/>);
+                        return (<AddImage key = {"AddImage" + index.toString()} 
+                                          ieid = {"ie" + number.toString()} 
+                                          imageUpdater = {updateNewImage}
+                                          removeImage = {removeImage}/>);
                     })
                 }
 

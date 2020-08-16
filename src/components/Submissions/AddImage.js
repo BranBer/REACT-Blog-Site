@@ -211,7 +211,8 @@ const AddImage = (props) =>
     }
 
     const removeComponent = () =>
-    {
+    {        
+        props.removeImage(props.ieid);
         changeComponent(false);
     }
 
