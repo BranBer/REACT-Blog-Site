@@ -154,7 +154,6 @@ const SubmissionForm = (props) =>
                 form_data.append(key, value);
             }
         }
-
         
         axios.post(
             url,
@@ -168,8 +167,7 @@ const SubmissionForm = (props) =>
         .then((response) => {
             console.log(response.data);
         })
-        .catch(err => console.log(err));
-        
+        .catch(err => console.log(err));        
     }
 
     return (

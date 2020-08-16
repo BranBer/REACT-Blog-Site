@@ -67,6 +67,7 @@ const ImageModifier = styled.div`
         width: auto;
     }
 
+    
     canvas
     {
         height: 350px;
@@ -107,19 +108,9 @@ const ImageStyler = (props) =>
 
     const handleOnCropComplete = (crop, pixelCrop) =>
     {
-        const canvasRef = imgPrev.current;
-        const image = new Image();
+        //const canvasRef = imgPrev.current;
+        const canvasRef = 'c' + props.ieid;
         let croppedImageCopy = croppedImage;
-        image.src = props.image;
-        
-        if(pixelCrop.unit === '%')
-        {
-            pixelCrop.height = image.height * (pixelCrop.height/100);
-            pixelCrop.width = image.width * (pixelCrop.width/100);
-
-            pixelCrop.y = image.height * (pixelCrop.y/100);
-            pixelCrop.x = image.width * (pixelCrop.x/100);
-        }
 
         let cropped = getCroppedImg(canvasRef, props.image, pixelCrop);
         croppedImageCopy.img = cropped;
@@ -130,12 +121,12 @@ const ImageStyler = (props) =>
         {
             let ext = extractImageFileExtensionFromBase64(props.image);
             props.imageUpdater(props.ieid, {img: props.image, fileExtension: ext});
-            console.log(props.image);
+            //console.log(props.image);
         }
         else
         {
             props.imageUpdater(props.ieid, croppedImage);
-            console.log(croppedImage);
+            //console.log(cropped);
         }
     }
 
@@ -159,7 +150,7 @@ const ImageStyler = (props) =>
                     onComplete = {handleOnCropComplete}
                     onChange = {updateImage}/>
                     <p>Canvas Crop</p>
-                    <canvas ref = {imgPrev}></canvas>
+                    <canvas id = {'c' + props.ieid} ref = {imgPrev}></canvas>
             </div>
         </ImageModifier>);
 }
