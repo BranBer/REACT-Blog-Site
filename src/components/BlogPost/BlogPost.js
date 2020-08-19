@@ -4,9 +4,8 @@ import GalleryImage from '../GalleryImage/GalleryImage';
 
 const Post = styled.div`
     background-color: #FF6565;
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    font-size: 18px;
+    /*font-family: 'Roboto', sans-serif;
+    font-size: 18px;*/
     color: #4D457A;
 
     min-height:400px;
@@ -30,7 +29,7 @@ const BlogPost = (props) =>
             <sub>{props.author}</sub>
             <sub>{props.date}</sub>
             <hr/>
-            <p>{props.content}</p>   
+            <div dangerouslySetInnerHTML = {{__html: props.content }}/>
             <GalleryImage images = {props.images}/>  
         </Post>
     );

@@ -181,19 +181,19 @@ const SubmissionForm = (props) =>
             }
         }
         
-        // axios.post(
-        //     url,
-        //     form_data,
-        //     {
-        //         headers : {
-        //         'Content-Type': 'multipart/form-data'
-        //         }
-        //     }   
-        // )
-        // .then((response) => {
-        //     console.log(response.data);
-        // })
-        // .catch(err => console.log(err));        
+        axios.post(
+            url,
+            form_data,
+            {
+                headers : {
+                'Content-Type': 'multipart/form-data'
+                }
+            }   
+        )
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch(err => console.log(err));        
     }
 
 
