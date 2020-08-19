@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import AddImage from './AddImage';
 import base64Stringtofile from './stringToFile';
 import axios from 'axios';
-import extractImageFileExtensionFromBase64 from './utils';
+import Editor from './Editor';
+
 
 const StyledForm = styled.div`
 
@@ -62,17 +63,27 @@ const StyledForm = styled.div`
         border-radius: 50px;
         border: 1px solid lightgreen;
     }
+
+    .my-editing-area
+    {
+        background-color:white;
+        height: 400px;
+    }
+
+    .quillContainer
+    {
+        background-color:white;  
+        height: auto;   
+    }
 `;
 
 const SubmissionForm = (props) =>
 {
     const [images, updateImages] = useState({count: [1]});
 
-    
     const [postData, updatePostData] = useState({
         post_title: null,
         author: null,
-        post_content: null,
         date: null
     });
 
@@ -134,12 +145,12 @@ const SubmissionForm = (props) =>
         updatePostData(data);
     }
 
-    const updateContent = (event) =>
+    const updateContent = (value) =>
     {   
         let data = postData;
         console.log(data);
         
-        data['post_content'] = event.target.value;
+        data['post_content'] = value;
 
         updatePostData(data);
     }
@@ -170,20 +181,21 @@ const SubmissionForm = (props) =>
             }
         }
         
-        axios.post(
-            url,
-            form_data,
-            {
-                headers : {
-                'Content-Type': 'multipart/form-data'
-                }
-            }   
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch(err => console.log(err));        
+        // axios.post(
+        //     url,
+        //     form_data,
+        //     {
+        //         headers : {
+        //         'Content-Type': 'multipart/form-data'
+        //         }
+        //     }   
+        // )
+        // .then((response) => {
+        //     console.log(response.data);
+        // })
+        // .catch(err => console.log(err));        
     }
+
 
     return (
         <StyledForm>
@@ -205,7 +217,8 @@ const SubmissionForm = (props) =>
                     })
                 }
 
-                <textarea form = "post_maker" placeholder = "Enter Post Content" onChange = {(event) => updateContent(event)}></textarea>
+                <Editor updateContent = {updateContent}/>                             
+
                 <button type = "button" id = "post_submit" onClick = {uploadContent}>Submit Post</button>
             </form>
         </StyledForm>);
