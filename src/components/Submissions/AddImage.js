@@ -94,6 +94,7 @@ const ImageModifier = styled.div`
     {
         max-width: 30em;
         max-height: 30em;
+        margin-right: 20px;
     }
 
     #modifier canvas
