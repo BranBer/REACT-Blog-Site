@@ -6,73 +6,103 @@ import 'react-image-crop/dist/ReactCrop.css';
 import extractImageFileExtensionFromBase64 from './utils';
 
 const ImageExpander = styled.div`
-    display: block;
-    vertical-align: top;
-    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+
+    background-image: linear-gradient(to right,#DAD3FF, rgba(0, 0, 0, 0.0));
+    padding: 10px;
+    border-radius: 50px;
+    min-width: 500px;
+    margin-bottom: 20px;
 
     button
     {
-        display: block;
-        vertical-align: top;
-        margin-bottom: 20px;
-        background-color: #FF6565;
         color: white;
         font-style: bold;
         border-radius: 10px;
-        border: 2px: solid #FF6565;
-        margin-top: 10px;
+        border: none;
+        width: 70px;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+
+    button:hover
+    {
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    button:focus
+    {
+        outline:0;
+        width: 80px;
+        height: 25px;
+    }
+
+    #expand
+    {
+        background-color: #6b7aff;
     }
 
     #remove
     {
         background-color: red;
-        border: 1px: solid red;
     }
 
-    input
+    .imageUploader
     {
-        display: block;
-        vertical-align: top;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+    }
+
+    .imageUploader label
+    {
+        margin-bottom: 10px;
+        background-color: #4D457A;
+        color: white;
+        border-radius: 25px;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 80px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    .imageUploader p
+    {
+        color: black;
     }
 `;
 
 const ImageModifier = styled.div`
-    position: relative;
-    width: 500px;
-    height: 500px;
-    background-color: #FF6565;
-    float:left;
-    border-radius: 50px;
-    margin: 30px 0 30px 0;
-    border: 5px solid #FF6565;
-    display: block;
-    vertical-align: top;
-    
     #modifier
-    { 
-        height: 350px;
-        width: 350px;
+    {
+        display: flex;
+        flex-direction: row;
+        background-color: #6b7aff;
+
+        border: 10px solid #6b7aff;
         border-radius: 50px;
-        border: 50px solid rgba(0, 0, 0, 0.3);
-        margin: 0;
-        position: absolute;               /* 2 */
-        top: 50%;                         /* 3 */
-        left: 50%;
-        transform: translate(-50%, -50%)
+
+        width: auto;
+        padding: 20px;
     }
 
-    img
+    #modifier img
     {
-        height: auto;
-        width: auto;
+        max-width: 30em;
+        max-height: 30em;
+    }
+
+    #modifier canvas
+    {
+        max-width: 30em;
+        max-height: 30em;
     }
 
     
-    canvas
-    {
-        height: 350px;
-        width: 350px;
-    }
 `;
 
 const DivStack = styled.div`
@@ -149,7 +179,6 @@ const ImageStyler = (props) =>
                     onImageLoaded = {handleImageLoaded}
                     onComplete = {handleOnCropComplete}
                     onChange = {updateImage}/>
-                    <p>Canvas Crop</p>
                     <canvas id = {'c' + props.ieid} ref = {imgPrev}></canvas>
             </div>
         </ImageModifier>);
@@ -168,6 +197,11 @@ const AddImage = (props) =>
     );
 
     const [showComponent, changeComponent] = useState(true);
+    const [inputProperties, updateInputProperties] = useState(
+        {
+            filename: 'No File Selected..'
+        }
+    );
 
     const ToggleImageStyler = () =>
     {
@@ -195,19 +229,23 @@ const AddImage = (props) =>
 
     const UpdateImage = (event) =>
     {
-        let reader = new FileReader();
-        reader.readAsDataURL(document.getElementById(props.ieid).files[0]);
+        if(event.target.files.length > 0)
+        {       
+            let reader = new FileReader();
+     
+            reader.readAsDataURL(event.target.files[0]);
+            updateInputProperties({filename: event.target.files[0].name});
 
-        reader.onloadend = function(e){
-            let img = e.target.result;
-
-            UpdateStyleImage(
-                {
-                    style: StyleImage.style,
-                    image: img
-                }
-            );
-        }       
+            reader.onloadend = function(e){
+                let img = e.target.result;
+                UpdateStyleImage(
+                    {
+                        style: StyleImage.style,
+                        image: img
+                    }
+                );
+            }     
+        }  
     }
 
     const removeComponent = () =>
@@ -221,12 +259,24 @@ const AddImage = (props) =>
             {
                 showComponent? 
                 <ImageExpander>
-                    <input type = "file"
-                    accept="image/png, image/jpeg"
-                    id = {props.ieid}
-                    onChange = {(event) => UpdateImage(event)}/>
-                    <button type = "button" id = "expand" onClick = {()=>ToggleImageStyler()}>+</button>
+                    <div className = "imageUploader"> 
+                        <label id = "UploadLabel" for = {props.ieid}>
+                        📁 Browse... 
+                        </label>                   
+
+                        <p>{inputProperties.filename}</p> 
+    
+                        <input type = "file"
+                        accept="image/png, image/jpeg"
+                        id = {props.ieid}
+                        onChange = {(event) => UpdateImage(event)}
+                        style = {{display: "none"}}/>
+
+
+                    </div>
+                    
                     <button type = "button" id = "remove" onClick = {()=>removeComponent()}>Remove</button>
+                    <button type = "button" id = "expand" onClick = {()=>ToggleImageStyler()}>+Editor</button>
                     <ImageStyler ieid = {props.ieid} style = {StyleImage.style} image = {StyleImage.image} imageUpdater = {props.imageUpdater}/>
                 </ImageExpander> : null
             }

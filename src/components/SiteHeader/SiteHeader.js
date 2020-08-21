@@ -43,27 +43,13 @@ const BannerImg = styled.div`
 `;
 
 const SiteHeader = () => 
-{
-    let selected = null;
-
-    const [currentContent, setContent] = useState({content: null});
-
-    const changeCurrentSelected = (content) =>
-    {
-        setContent({content: content});
-        console.log(currentContent.content);
-    }
+{   
 
     return(
         <HeaderDiv>
             <SiteLogo src = 'logo.png'/>
-            <StyledTitle selected = { changeCurrentSelected }/>
-            <BannerImg />
-
-             
-            { currentContent.content == 'Blog'? <Panel/> : 
-              currentContent.content == 'Submit'? <SubmissionForm/>: null}
-             
+            <StyledTitle/>
+            <BannerImg/>             
         </HeaderDiv>
     );
 }

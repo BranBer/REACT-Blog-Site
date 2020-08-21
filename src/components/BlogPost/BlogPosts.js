@@ -9,15 +9,20 @@ const BlogPosts = (props) =>
 {
     const [PostData, updatePostData] = useState({data: {},
                                                 position: 0});
-
-
+    
     useEffect( () => {
-        let data = null;
+        let mounted = true;
+
         axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ (PostData.position + 15) + '/').then(response => {
-            updatePostData({data: response.data,
-                            position: PostData.position});
+            
+            if(mounted)
+            {
+                updatePostData({data: response.data,
+                                position: PostData.position});
+            }
         });
 
+        return () => mounted = false;
 
     });
 

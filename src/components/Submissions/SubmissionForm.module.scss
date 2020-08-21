@@ -1,0 +1,118 @@
+button:hover
+{
+        cursor: pointer;
+}
+
+button:focus
+{
+        outline:none;
+}
+
+.submission
+{
+        display: flex;
+        flex-direction: column;
+        background-color: #4D457A;
+        max-width: 900px;
+        min-width: 700px;
+        margin: 10em;
+
+        border: 1px solid #4D457A;
+        border-radius: 50px;
+}
+
+.submission form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 3em;
+}
+
+.editor
+{
+    background-color: white;
+    border-radius: 50px;
+    border: 20px solid lightgrey;
+    margin: 3em 0 3em 0;
+    outline: none;
+}
+
+.submission form input
+{
+    margin-bottom: 3em;
+}
+
+.submission input[type=text]
+{
+        border: none;
+        border-radius: 20px;
+        padding: 5px;
+        width: 30%;
+}
+
+.submission input[type=text]:focus
+{
+        outline: none;
+}
+
+#submitButton
+{
+        background-color: #FF6565;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 20px;
+        padding: 10px;
+}
+
+#submitButton:hover
+{
+        padding: 12px;
+}
+
+#submitButton:focus
+{
+        outline: none;
+}
+
+.addAnotherImage
+{
+        margin-top: 30px;
+        background-color: lightgreen;
+        position: relative;
+        padding: 5px;
+
+        border-radius: 50px;
+        border: none;
+}
+
+.addAnotherImage:hover
+{
+        margin-top: 30px;
+        background-color: lightgreen;
+        position: relative;
+        padding: 6px;
+
+        border-radius: 50px;
+        border: none;
+}
+
+.hover
+{
+        margin-top: 30px;
+        background-color: lightgreen;
+        position: relative;
+
+        border-radius: 50px;
+        border: 1px none lightgreen;
+}
+
+.inputLabel
+{
+        margin-bottom: 5px;
+        font-size: 24px;
+        color: white;
+        font-family: "marck script";
+}
+

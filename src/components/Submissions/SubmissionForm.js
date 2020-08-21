@@ -4,78 +4,7 @@ import AddImage from './AddImage';
 import base64Stringtofile from './stringToFile';
 import axios from 'axios';
 import Editor from './Editor';
-
-
-const StyledForm = styled.div`
-
-    position: absolute;
-    display: block;
-
-    width: 700px;
-    height: auto;
-    margin-left: 10%;
-
-    top: 40%;
-
-    background-color: #4D457A;
-    z-index: 1;
-
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    border: 5px solid #4D457A;
-
-    input
-    {
-        display:block;
-        vertical-align: top;
-
-        margin-top: 20px;
-    }
-
-    #post_submit
-    {
-        display:block;
-        vertical-align: top;
-        height: auto;
-        width: auto;
-        margin-top: 20px;
-    }
-
-    textarea
-    {
-        display:block;
-        vertical-align: top;
-        height: auto;
-        min-height: 400px;
-        min-width: 600px;
-        margin-top: 20px;
-    }
-
-    #AnotherImage
-    {
-        display:block;
-        vertical-align: top;
-
-        margin: 50px 0 0px 0;
-        background-color: lightgreen;
-        position: relative;
-
-        border-radius: 50px;
-        border: 1px solid lightgreen;
-    }
-
-    .my-editing-area
-    {
-        background-color:white;
-        height: 400px;
-    }
-
-    .quillContainer
-    {
-        background-color:white;  
-        height: auto;   
-    }
-`;
+import styles from './SubmissionForm.module.scss'
 
 const SubmissionForm = (props) =>
 {
@@ -198,30 +127,36 @@ const SubmissionForm = (props) =>
 
 
     return (
-        <StyledForm>
-            <form method = {'POST'} id = "post_maker">
-                <label></label>
-                <input type = "text" placeholder = "Post Title" id = "post_title" onChange = {(event) => updateTitle(event)}/>
-
-                <input type = "text" placeholder = "Post Author" id = "post_author" onChange = {(event) => updateAuthor(event)}/>
-
-                <button id = "AnotherImage" type = "button" onClick = {() => addAnotherImage()}>+Image</button>
-
-                {
-                    images.count.map((number, index) => 
+        <div className = {styles.submission}>
+            <div>
+                <form method = {'POST'} id = "post_maker">
+                    <label className = {styles.inputLabel}>Title</label>
+                    <input type = "text" placeholder = "Post Title" id = "post_title" onChange = {(event) => updateTitle(event)}/>
+    
+                    <label className = {styles.inputLabel}>Author</label>
+                    <input type = "text" placeholder = "Post Author" id = "post_author" onChange = {(event) => updateAuthor(event)}/>
+    
+    
                     {
-                        return (<AddImage key = {"AddImage" + index.toString()} 
-                                          ieid = {"ie" + number.toString()} 
-                                          imageUpdater = {updateNewImage}
-                                          removeImage = {removeImage}/>);
-                    })
-                }
+                        images.count.map((number, index) => 
+                        {
+                            return (<AddImage key = {"AddImage" + index.toString()} 
+                                              ieid = {"ie" + number.toString()} 
+                                              imageUpdater = {updateNewImage}
+                                              removeImage = {removeImage}/>);
+                        })
+                    }
 
-                <Editor updateContent = {updateContent}/>                             
-
-                <button type = "button" id = "post_submit" onClick = {uploadContent}>Submit Post</button>
-            </form>
-        </StyledForm>);
+                    <button className = {styles.addAnotherImage} type = "button" onClick = {() => addAnotherImage()}>+Image</button>
+    
+                    <div className = {styles.editor}>
+                        <Editor updateContent = {updateContent}/>    
+                    </div>                         
+    
+                    <button type = "button" id = {styles.submitButton} onClick = {uploadContent}>Submit Post</button>
+                </form>
+            </div>
+        </div>);
 }
 
 export default SubmissionForm;

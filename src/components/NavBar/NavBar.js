@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavO from './NavOption';
+
+import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
+
+import AboutPage from '../../pages/AboutPage';
+
 
 const NavSection = styled.ul`
     list-style: none;
@@ -17,16 +21,34 @@ const NavSection = styled.ul`
 
     height: 30px;
 
+    li
+    {
+        display: inline-block;
+        margin-left: 50px;
+    }
 
-    li:hover
+
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: white;
+
+    &:hover
     {
         color: #FF6565;
     }
 
-    li:active
+    &:active
     {
         color: #DAD3FF;
         font-size: 24px;   
+    }
+
+    &:focus
+    {
+        font-size: 24px; 
+        color: #FF6565;
     }
 `;
 
@@ -34,15 +56,14 @@ const NavBar = (props) =>
 {
     var currentContent = 'Blog';
 
-
     return (
         <NavSection current = { props.currentContent }>
-            <ul>
-                <NavO selected = { props.selected }>Home</NavO>
-                <NavO selected = { props.selected }>Blog</NavO>
-                <NavO selected = { props.selected }>Submit</NavO>
-                <NavO selected = { props.selected }>About</NavO>
-            </ul>
+            
+                <li><StyledLink to = "/">Home</StyledLink></li>
+                <li><StyledLink to = "/BlogPosts">Blog</StyledLink></li>
+                <li><StyledLink to = "/Submit">Submit</StyledLink></li>
+                <li><StyledLink to = "/About">About</StyledLink></li>
+
         </NavSection>
     );
 }
