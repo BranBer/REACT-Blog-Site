@@ -4,21 +4,28 @@ import styles from './BlogPost.module.scss';
 
 const BlogPost = (props) =>
 {
-
+    const date = new Date(props.date);
+    const formattedDate = date.toLocaleString();
 
     return (
-        <div className = {styles.BlogPost}>
-            <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>  
-
-            
-            <div className = {styles.Post}>
-                <h3>{props.title}</h3>
-                <sub>{props.author}</sub>
-                <br/>
-                <sub>{props.date}</sub>
+        <div className = {styles.BlogPostContainer}>            
+            <h1>{props.title}</h1>
+            <div className = {styles.BlogPost}>
+                <div className = {styles.PostHeader}>
+                    <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>
+                    <sub>{props.author}</sub>
+                    <br/>
+                    <sub>{formattedDate}</sub>
+                </div>
+    
+                <div className = {styles.PostContentContainer}>                
+                    
+                    <div className = {styles.PostContent} dangerouslySetInnerHTML = {{__html: props.content }}/>
+                    
+                </div>
             </div>
 
-            <div className = {styles.PostContent} dangerouslySetInnerHTML = {{__html: props.content }}/>
+            <button>Continue Reading...</button>
         </div>
     );
 }

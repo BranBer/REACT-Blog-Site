@@ -12,7 +12,7 @@ const Panel = () =>
 
     return (
     <div className = {styles.BlogPanel}>
-        <h2>Posts</h2>
+        <h1 id = {styles.BlogPanelHeading}>Posts</h1>
         <BlogPosts/>
     </div>);
 }

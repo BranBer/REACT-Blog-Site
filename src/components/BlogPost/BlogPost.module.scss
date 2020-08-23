@@ -1,21 +1,55 @@
+.BlogPostContainer
+{
+    display: flex;
+    flex-direction: column;
+
+    color: black;
+    margin: 2em;
+    height: 27em;
+
+    padding: 1em 1em 1em 1em;
+    border-radius: 10px;
+
+    background-color: white;
+    box-shadow: 4px 4px 15px black;
+}
+
 .BlogPost
 {
     display: flex;
     flex-direction: row;
-    margin: 2em;
-    max-height: 10em;
 
-    padding: 1em 1em 1em 1em;
-    border-radius: 50px 0 0 50px;
-
+    
     img
     {
         height: 10em;
-        margin: 0 2em 0 0;
-        border-radius: 50px;
+        margin: 0 2em 2em 0;
+        border-radius: 10px;
+        align-self: flex-start;
+
+        box-shadow: 5px 5px 10px 5px #4D457A;
     }
 
-    background-image: linear-gradient(to right, white, rgba(0, 0, 0, 0.0));
+    
+    //background-image: linear-gradient(to right, white, rgba(0, 0, 0, 0.0));
+}
+
+.BlogPostContainer button
+{
+    
+    align-self: flex-end;
+    padding: 1.2em;
+    min-width: 15em;
+
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    
+}
+
+.BlogPostContainer button:hover
+{
+    padding: 1.4em;
 }
 
 .Post
@@ -24,18 +58,41 @@
     flex-direction: column;
 }
 
+.PostContentContainer
+{
+    display: flex;
+    flex-direction: column;
+
+    height: 18em;
+    width: 90%;
+    margin-bottom: 1em;
+
+    color: black;
+
+    border-bottom: 1px solid black;
+    border-radius: 0px 0px 50px 50px;
+}
+
+.PostHeader
+{
+    display: flex;
+    flex-direction: column;
+}
+
 .PostContent
 {
     overflow: hidden;
-    margin: 0 2em 0 3em;
-    padding: 0 4em 0 4em;
-    
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0 4em 0 4em;    
 
-    border: 5px solid #4D457A;
-    background-color: white;
+    border: none;
+    border-radius: 50px;
     color:black;
-    // background-image: linear-gradient(to top, white, rgba(0, 0, 0, 0.0));
-
 }
+
+
+
+
 
 ::-webkit-scrollbar-corner { background: rgba(0,0,0,0.0); }
