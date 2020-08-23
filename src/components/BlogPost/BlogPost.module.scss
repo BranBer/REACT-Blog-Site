@@ -1,0 +1,41 @@
+.BlogPost
+{
+    display: flex;
+    flex-direction: row;
+    margin: 2em;
+    max-height: 10em;
+
+    padding: 1em 1em 1em 1em;
+    border-radius: 50px 0 0 50px;
+
+    img
+    {
+        height: 10em;
+        margin: 0 2em 0 0;
+        border-radius: 50px;
+    }
+
+    background-image: linear-gradient(to right, white, rgba(0, 0, 0, 0.0));
+}
+
+.Post
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.PostContent
+{
+    overflow: hidden;
+    margin: 0 2em 0 3em;
+    padding: 0 4em 0 4em;
+    
+
+    border: 5px solid #4D457A;
+    background-color: white;
+    color:black;
+    // background-image: linear-gradient(to top, white, rgba(0, 0, 0, 0.0));
+
+}
+
+::-webkit-scrollbar-corner { background: rgba(0,0,0,0.0); }

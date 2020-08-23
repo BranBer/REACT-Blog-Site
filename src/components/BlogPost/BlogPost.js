@@ -1,38 +1,39 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useEffect} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
-
-const Post = styled.div`
-    background-color: #FF6565;
-    /*font-family: 'Roboto', sans-serif;
-    font-size: 18px;*/
-    color: #4D457A;
-
-    min-height:400px;
-
-    border-radius: 50px 50px 50px 50px;
-
-    display:block;
-    vertical-align: top;
-
-    padding-top: 50px;
-    margin-top: 40px;
-`;
-
-//            <GalleryImage images = {props.images}/>                
+import styles from './BlogPost.module.scss';
 
 const BlogPost = (props) =>
 {
+
+
     return (
-        <Post>
+        <div className = {styles.BlogPost}>
+            <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>  
+
+            
+            <div className = {styles.Post}>
+                <h3>{props.title}</h3>
+                <sub>{props.author}</sub>
+                <br/>
+                <sub>{props.date}</sub>
+            </div>
+
+            <div className = {styles.PostContent} dangerouslySetInnerHTML = {{__html: props.content }}/>
+        </div>
+    );
+}
+
+/*
+
+        <div className = {styles.BlogPost}>
             <h3>{props.title}</h3>
             <sub>{props.author}</sub>
             <sub>{props.date}</sub>
             <hr/>
             <div dangerouslySetInnerHTML = {{__html: props.content }}/>
             <GalleryImage images = {props.images}/>  
-        </Post>
-    );
-}
+        </div>
+*/
+
 
 export default BlogPost;

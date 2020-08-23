@@ -1,0 +1,24 @@
+.BlogPanel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    background-color: #4D457A;
+
+    width: 50%;
+    min-width: 700px;
+    margin: 5em 0 0 5em;
+
+    font-family: 'Roboto';
+    color: white;
+
+    border-radius: 50px;
+
+    h2
+    {
+        margin: 1em auto 0em auto;
+        font-family: 'Marck Script';
+        font-size: 36px;
+    }
+}
