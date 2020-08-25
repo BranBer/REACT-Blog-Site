@@ -1,0 +1,28 @@
+.SelectedPostContainer
+{
+    display: flex;
+    min-width: 700px;
+    width: 60%;
+
+    flex-direction: column;
+    margin: 5em;
+    
+    background-color: white;
+    padding: 1em;
+    
+    box-shadow: 5px 5px 15px 5px black;
+}
+
+.SelectedPost
+{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin: 2em;
+    width: 90%;
+    align-items: flex-start;
+}
+
+.PostGalleryImage
+{
+}

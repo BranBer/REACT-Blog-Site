@@ -4,12 +4,14 @@ import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
-
+import {SelectedPostProvider} from '../src/components/BlogPost/SelectedPostContext';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <SelectedPostProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </SelectedPostProvider>,
   document.getElementById('root')
 );
 

@@ -1,52 +1,39 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
-const Gallery = styled.div`
-    
-    height: auto;
-    width: auto;
-    margin:auto;
-
-    background-color: #DAD3FF;
-    display: inline-block;
-    border-radius: 30px 30px 30px 30px;
+const Gallery = styled.div`    
+    display: flex;
+    flex-direction: row;
 
     img
     {
-        float: left;
-        height: 350px;
-        width: 350px;
+        height: 75%;
 
-        margin: auto;
+        border-top: 3px solid black;
+        border-bottom: 3px solid black;
     }
-
 
     div
     {
-        float:left;
-        height: 350px;
         width: 20px;
-        color: white;
-        background-color: #4D457A;
-        border: 2px solid #4D457A;
-
-        
+        color: white;        
+        overflow:hidden;
         font-size: 20px;
-
+        transition: background-color 2s ease;
+        z-index: 0;
     }
 
     div:hover
     {
+        overflow:visible;
         background-color: white;
-        border: 2px solid white;
-        color: black;
         cursor: pointer;
+        background-color: rgba(77, 69, 122, .6)
     }
 
     div:active
     {
         cursor: pointer;
-        font-size: 25px;
     }
 
     span
@@ -55,15 +42,26 @@ const Gallery = styled.div`
         top: 40%;
     }
     
-
     #previous
     {
-        border-radius: 30px 0 0 30px;
+        background-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
+        border-radius: 50px 0 0 50px;
     }
 
     #next
     {
-        border-radius: 0px 30px 30px 0px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
+        border-radius: 0 50px 50px 0;
+    }
+
+    #next:hover
+    {
+        
+    }
+
+    #previous:hover
+    {
+        //padding: 0 0 0 5px;
     }
 
 `;

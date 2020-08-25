@@ -1,11 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import styles from './BlogPost.module.scss';
+
+import {Link} from 'react-router-dom';
+import { SelectedPostContext } from './SelectedPostContext';
 
 const BlogPost = (props) =>
 {
     const date = new Date(props.date);
     const formattedDate = date.toLocaleString();
+    const PostContext = useContext(SelectedPostContext);
+    const ToUrl = props.title + date.toString();
+
+    // useEffect(() => {
+    //     console.log(props);
+    // });
 
     return (
         <div className = {styles.BlogPostContainer}>            
@@ -25,7 +34,11 @@ const BlogPost = (props) =>
                 </div>
             </div>
 
-            <button>Continue Reading...</button>
+            <Link to = {'/post/' + props.id}
+                  style = {{alignSelf: 'flex-end'}}
+                  onClick = {(newPost) => PostContext.UpdatePost({ToUrl, ...props})}>
+                <button>Continue Reading...</button>
+            </Link>
         </div>
     );
 }

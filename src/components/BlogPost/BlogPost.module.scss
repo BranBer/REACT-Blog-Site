@@ -18,7 +18,6 @@
 {
     display: flex;
     flex-direction: row;
-
     
     img
     {
@@ -29,9 +28,11 @@
 
         box-shadow: 5px 5px 10px 5px #4D457A;
     }
+}
 
-    
-    //background-image: linear-gradient(to right, white, rgba(0, 0, 0, 0.0));
+Link
+{
+    align-self: flex-end;  
 }
 
 .BlogPostContainer button

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import SiteHeader from '../components/SiteHeader/SiteHeader'
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -8,19 +8,32 @@ import BlogPostsPage from '../pages/BlogPostsPage';
 import HomePage from '../pages/HomePage';
 import SubmitPage from '../pages/SubmitPage';
 
+import BlogPostSelected from '../components/BlogPost/BlogPostSelected';
+import {SelectedPostContext} from '../components/BlogPost/SelectedPostContext';
+
 function App() {
+
+  const PostContext = useContext(SelectedPostContext);
+
+  
+
+  const showContext = () =>
+  {
+    console.log(PostContext.CurrentPostData);  
+  }
+
   return (
     <Router>    
       <div className="App">
 
-        <SiteHeader/>    
+        <SiteHeader/> 
 
-        <Switch>
-          
+        <Switch>          
           <Route path="/About" component = {AboutPage}/>  
           <Route path="/BlogPosts" component = {BlogPostsPage}/>
           <Route path="/Submit" component = {SubmitPage}/>
-          <Route path="/" component = {HomePage}/>          
+          <Route path="/post/:id" component = {BlogPostSelected}/> 
+          <Route path="/" component = {HomePage}/> 
         </Switch>
 
       

@@ -36,7 +36,7 @@ const BannerImg = styled.div`
     border-bottom-width: 5px;
     border-top-width: 5px;
 
-    background-image: url('forest_pic.png');
+    background-image: url('/forest_pic.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 10% 5%;
@@ -47,7 +47,7 @@ const SiteHeader = () =>
 
     return(
         <HeaderDiv>
-            <SiteLogo src = 'logo.png'/>
+            <SiteLogo src = '/logo.png'/>
             <StyledTitle/>
             <BannerImg/>             
         </HeaderDiv>
