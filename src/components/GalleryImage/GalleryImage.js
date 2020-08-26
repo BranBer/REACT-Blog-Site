@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import {CSSTransition} from 'react-transition-group';
 
 const Gallery = styled.div`    
     display: flex;
@@ -7,7 +8,7 @@ const Gallery = styled.div`
 
     img
     {
-        height: 75%;
+        height: 40em;
 
         border-top: 3px solid black;
         border-bottom: 3px solid black;
@@ -68,12 +69,16 @@ const Gallery = styled.div`
 
 const GalleryImage = (props) =>
 {
+    let srcUrl = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/';
+
     const [postImages, updatePostImages] = useState(
         {
         images: props.images,
         current: props.images[0],
         imagePos: 0
         });
+
+    const [inprop, setInProp] = useState(false);
 
     const nextImage = () =>
     {
@@ -117,19 +122,27 @@ const GalleryImage = (props) =>
     }
 
     return (
-    <Gallery>
-            <div onClick = {() => previousImage()} 
-                 id = "previous">
-                <span>⮜</span>
-            </div>   
-
-            <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + postImages.current}/>
+    <Gallery>       
+                <>   
+                    {props.images.length >1?
+                    <div onClick = {() => previousImage()} 
+                        id = "previous">
+                        <span>⮜</span>
+                    </div>: null}  
+                </>             
+            {
+                props.images.length >1?
+                <img src = {srcUrl + postImages.current}/>:
+                <img src = {srcUrl + postImages.current} style = {{border: '2px solid black', borderRadius: '50px'}}/>
+            }
             
-            
-            <div onClick = {() => nextImage()} 
-                 id = "next">
-                <span>⮞</span>
-            </div>
+            <>
+                {props.images.length >1?
+                <div onClick = {() => nextImage()} 
+                    id = "next">
+                    <span>⮞</span>
+                </div>: null}
+            </>
                 
     </Gallery>);
 }
