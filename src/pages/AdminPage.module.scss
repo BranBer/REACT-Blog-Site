@@ -50,3 +50,16 @@
     }
 }
 
+.AdminPageContainer
+{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    .logoutButton
+    {
+        background-color: lightcoral;
+        margin: 2em;
+        border: 2px solid black;
+    }
+}

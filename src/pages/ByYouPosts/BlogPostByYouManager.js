@@ -4,7 +4,7 @@ import axios from 'axios';
 import ByYouCard from './ByYouCard';
 import styles from './ByYouPosts.module.scss';
 
-const BlogPostManager = (props) =>
+const BlogPostByYouManager = (props) =>
 {
     const [postData, updatePosts] = useState({
         position: 0,
@@ -113,20 +113,21 @@ const BlogPostManager = (props) =>
         {
             let key = 'byYou' + object[1]['id'].toString();
             return (<ByYouCard key = {key}
+                               id = {object[1]['id']}
                                author = {object[1]['author']}
                                date = {object[1]['date']}
                                content = {object[1]['post_content']}
-                               title = {object[1]['post_title']} />);
+                               title = {object[1]['post_title']}
+                               visibility = {object[1]['isVisible']}/>);
         }
     );
     
     return (
     <div className = {styles.ByYouPanel}>
         <div className = {styles.PostCycler}>
-            <button>|◀ </button>
             <button onClick = {getPrevPosts}>◀ </button>
+            <h2>Posts By Viewers</h2>
             <button onClick = {getNextPosts}>▶</button>
-            <button>▶|</button>
         </div>
 
         {posts}
@@ -134,4 +135,4 @@ const BlogPostManager = (props) =>
     </div>);
 }
 
-export default BlogPostManager;
+export default BlogPostByYouManager;

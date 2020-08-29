@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from'axios';
-import styles from './AdminLoginPage.module.scss';
-import BlogPostManager from './ByYouPosts/BlogPostManager';
+import styles from './AdminPage.module.scss';
+import BlogPostByYouManager from './ByYouPosts/BlogPostByYouManager';
 
 const AdminLoginPage = () =>
 {
     const [Credentials, UpdateCredentials] = useState({username: '', password: ''});
 
     const [loginStatusMsg, updateLoginStatus] = useState("");
+
+    const [isLoggedIn, updateLogin] = useState(sessionStorage.getItem('token') == null? false: true);
 
     const loginHandler = () =>
     {
@@ -38,6 +40,7 @@ const AdminLoginPage = () =>
             if (response.status == 200)
             {
                 updateLoginStatus("Login Success");
+                updateLogin(true);
             }
         })
         .catch(err => updateLoginStatus("Invalid Credentials"));
@@ -57,9 +60,16 @@ const AdminLoginPage = () =>
         UpdateCredentials(myCred);
     }
 
+    const logoutHandler = () =>
+    {
+        sessionStorage.setItem('token', null);
+        updateLogin(false);
+    }
+
     return (
-        <div>
-            {sessionStorage.getItem('token') == null?<div className = {styles.AdminLoginContainer}>
+        <div className = {styles.AdminPageContainer}>
+            {isLoggedIn == false?
+            <div className = {styles.AdminLoginContainer}>
                 <h2>👑 Login</h2>
                 <hr/>
                 <div className = {styles.LoginInput}>
@@ -77,9 +87,9 @@ const AdminLoginPage = () =>
                 <br/>
                 <sub>{loginStatusMsg}</sub>
             </div>: 
-            <div>
-                <button>Logout</button>
-                <BlogPostManager/>
+            <div className = {styles.AdminPageContainer}>
+                <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
+                <BlogPostByYouManager/>
             </div>
             }
         </div>
