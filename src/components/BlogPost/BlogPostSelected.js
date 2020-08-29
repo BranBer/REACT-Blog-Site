@@ -2,10 +2,13 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import styles from './BlogPostSelected.module.scss';
+import {useHistory} from 'react-router-dom';
 
 const BlogPostSelected = (props) =>
 {
     const [SelectedPostData, UpdateSelectedPostData] = useState({data: null});
+
+    let history = useHistory();
 
     useEffect(()=>
     {
@@ -43,12 +46,15 @@ const BlogPostSelected = (props) =>
                 <br/>
                 <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       
                 <hr/>
-                <sub>{SelectedPostData.data[0].author}</sub>
                 <br/>
+                <sub>{SelectedPostData.data[0].author}</sub>
                 <sub>{(new Date(SelectedPostData.data[0].date)).toLocaleString()}</sub>
+                <br/>
             </div>
             : <p>Not Loaded</p>
         }
+        
+        <button onClick = {() => history.goBack()}>⬅ Go Back</button>
     </div>);
 }
 

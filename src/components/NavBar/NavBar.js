@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
@@ -27,7 +27,19 @@ const NavSection = styled.ul`
         margin-left: 50px;
     }
 
+    #AdminPage
+    {
+    }
 
+    #AdminPage:hover
+    {       
+        display: block;
+    }
+
+    #logoutOption:hover
+    {
+        cursor: pointer;
+    }
 `;
 
 const StyledLink = styled(Link)`
@@ -54,16 +66,13 @@ const StyledLink = styled(Link)`
 
 const NavBar = (props) => 
 {
-    var currentContent = 'Blog';
-
     return (
-        <NavSection current = { props.currentContent }>
-            
+        <NavSection current = { props.currentContent }>            
                 <li><StyledLink to = "/">Home</StyledLink></li>
                 <li><StyledLink to = "/BlogPosts">Blog</StyledLink></li>
                 <li><StyledLink to = "/Submit">Submit</StyledLink></li>
                 <li><StyledLink to = "/About">About</StyledLink></li>
-
+                <li><StyledLink to = "/AdminLogin">♛</StyledLink></li>
         </NavSection>
     );
 }

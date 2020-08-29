@@ -8,7 +8,7 @@ const Gallery = styled.div`
 
     img
     {
-        height: 40em;
+        height: 25em;
 
         border-top: 3px solid black;
         border-bottom: 3px solid black;

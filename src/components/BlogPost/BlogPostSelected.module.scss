@@ -3,14 +3,29 @@
     display: flex;
     min-width: 700px;
     width: 60%;
+    max-width: 900px;
 
     flex-direction: column;
     margin: 5em;
     
     background-color: white;
-    padding: 2em;
+    padding: 1em;
     
     box-shadow: 5px 5px 15px 5px black;
+    align-items: center;
+
+    button
+    {
+        background-color:black;
+        color: white;
+        border: none;
+        padding: 1em 2em;
+    }
+
+    hr
+    {
+        width: 100%;
+    }
 }
 
 .SelectedPost
@@ -19,10 +34,12 @@
     flex-direction: column;
     color: black;
     width: 90%;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: baseline;
 }
 
-.PostGalleryImage
-{
-    height: 50%;
-}
+// .PostGalleryImage
+// {
+//     height: 50%;
+//     width: 100%;
+// }

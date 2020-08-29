@@ -1,0 +1,52 @@
+.AdminLoginContainer
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em;
+    padding: 2em 1em;
+    color: white;
+    background-color: #4D457A;
+    width: 50%;
+    height: auto;
+    border-radius: 15px;
+
+    button
+    {
+        padding: .5em 1em;
+        color: white;
+        font-family: "Marck Script";
+        font-weight: bold;
+        font-size: 20px;
+        background-color: goldenrod;
+        border: none;
+        transition: background-color 1s ease-in-out;
+
+        &:hover
+        {
+            background-color: orangered;
+        }
+    }
+
+    hr
+    {
+        width: 60%;
+    }
+
+    .LoginInput
+    {
+        margin: 1em;
+        label
+        {
+            display: inline-block;
+            width: 80px;
+            text-align: right;
+        }
+
+        input
+        {
+            margin-left: 10px;
+        }
+    }
+}
+

@@ -1,0 +1,106 @@
+.PostCycler
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+    button
+    {
+        color: white;
+        background-color: transparent;
+        padding: 5px 10px 5px 10px;
+        border-radius: 50px;
+        border: none;
+        font-size: 24px;
+
+        &:hover
+        {
+            color: lightblue;
+        }
+    }
+}
+
+.ByYouPanel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #4D457A;
+    border-radius: 50px;
+    margin: 2em;
+    width: 80%;
+    min-width: 800px;
+    height: auto;
+
+    padding: 2em;
+    row-gap: 1em;
+}
+
+.ByYouCard
+{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 5px;
+    padding: 2em;
+    overflow-y: scroll;
+
+    height: 11vh;
+    transition: height .5s ease-in-out;
+    
+    &:hover
+    {
+        height: 55vh;
+    }
+
+    .ByYouContent
+    {
+        width: 75%;
+    }
+}
+
+.PostOptions
+{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 1em;
+    
+    button
+    {
+        position: absolute;
+        border:none;
+        border-radius: 50px;
+        margin-left: 70px;
+        transition: background-color 2s ease-in-out;
+    }
+
+    .makeVisibleButton
+    {
+        background-color: lightgreen;
+        padding: 1em;
+
+        &:hover
+        {
+            background-color: lightyellow;
+        }
+    }
+
+    .deleteButton
+    {
+        background-color: red;
+        color: white;
+        width: 50px;   
+        padding: 5px;     
+        margin-top: 70px;
+
+        &:hover
+        {
+            background-color: darkred;
+        }
+    }
+}
+

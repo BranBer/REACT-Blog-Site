@@ -7,15 +7,14 @@ import AboutPage from '../pages/AboutPage';
 import BlogPostsPage from '../pages/BlogPostsPage';
 import HomePage from '../pages/HomePage';
 import SubmitPage from '../pages/SubmitPage';
+import AdminLoginPage from '../pages/AdminLoginPage';
 
 import BlogPostSelected from '../components/BlogPost/BlogPostSelected';
 import {SelectedPostContext} from '../components/BlogPost/SelectedPostContext';
 
 function App() {
 
-  const PostContext = useContext(SelectedPostContext);
-
-  
+  const PostContext = useContext(SelectedPostContext);  
 
   const showContext = () =>
   {
@@ -33,6 +32,7 @@ function App() {
           <Route path="/BlogPosts" component = {BlogPostsPage}/>
           <Route path="/Submit" component = {SubmitPage}/>
           <Route path="/post/:id" component = {BlogPostSelected}/> 
+          <Route path="/AdminLogin" component = {AdminLoginPage}/> 
           <Route path="/" component = {HomePage}/> 
         </Switch>
 
