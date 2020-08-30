@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from'axios';
 import styles from './AdminPage.module.scss';
 import BlogPostByYouManager from './ByYouPosts/BlogPostByYouManager';
+import BlogPostManager from './ByYouPosts/BlogPostManager';
 
 const AdminLoginPage = () =>
 {
@@ -89,7 +90,10 @@ const AdminLoginPage = () =>
             </div>: 
             <div className = {styles.AdminPageContainer}>
                 <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
-                <BlogPostByYouManager/>
+                <div className = {styles.BlogPanels}>
+                    <BlogPostManager/>
+                    <BlogPostByYouManager/>                   
+                </div>
             </div>
             }
         </div>

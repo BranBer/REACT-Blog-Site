@@ -1,0 +1,131 @@
+.PostCycler
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    color: white;
+    font-family: "marck script";
+    font-size: 24px;
+
+    button
+    {
+        color: white;
+        background-color: transparent;
+        padding: 5px 10px 5px 10px;
+        border-radius: 50px;
+        border: none;
+        font-size: 24px;
+
+        &:hover
+        {
+            color: lightblue;
+        }
+    }
+}
+
+.BlogPostManageableFlex
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    background-color: white;
+    height: 7em;
+    width: 90%;
+    padding: 2em;
+    border-radius: 10px;
+    overflow-y: hidden;
+
+    transition: height .75s ease-in-out;
+
+    &:hover
+    {
+        height: 30em;
+    }
+
+    .BlogPostManageableContent
+    {
+        overflow-y: scroll;
+        height: 100%;
+        width: 100%;
+        align-self: center;
+    }
+}
+
+.BlogPostManager
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2em;
+    row-gap: 1em;
+    width: 50%;
+    background-color: #4D457A;
+
+    border-radius: 50px;
+    margin: 2em;
+}
+
+.BlogPostManageableContainer
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    color: black;
+
+    img
+    {
+        height: 100px;
+    }
+
+    .BlogPostManageable
+    {
+        display: flex;
+        flex-direction: column;
+        width: 9em;
+        padding: 0 0 0 1em;
+    }
+
+    .BlogPostManageableOptions
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        row-gap: 1em;
+        margin-left: 1em;
+
+        button
+        {
+            transition: background-color 2s ease-in-out;
+        }
+
+        .makeVisibleButton
+        {
+            background-color: lightgreen;
+            width: auto;
+            padding: 0.5em;
+
+            &:hover
+            {
+                background-color: rgba(144,238,144,.3);
+            }
+        }
+
+        .deleteButton
+        {
+            background-color: red;
+            padding: 0.5em;
+            color: white;
+            width: auto;
+
+            &:hover
+            {
+                background-color: darkred;
+            }
+        }
+    }
+}
