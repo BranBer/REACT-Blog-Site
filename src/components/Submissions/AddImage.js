@@ -12,7 +12,7 @@ const ImageExpander = styled.div`
     background-image: linear-gradient(to right,#DAD3FF, rgba(0, 0, 0, 0.0));
     padding: 10px;
     border-radius: 50px;
-    min-width: 500px;
+    min-width: 90%;
     margin-bottom: 20px;
 
     button
@@ -65,7 +65,7 @@ const ImageExpander = styled.div`
         padding: 5px;
         cursor: pointer;
         font-size: 14px;
-        width: 80px;
+        width: 90px;
         height: 20px;
         margin-right: 10px;
     }

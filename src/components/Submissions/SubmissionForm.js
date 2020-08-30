@@ -93,6 +93,20 @@ const SubmissionForm = (props) =>
 
         let form_data = new FormData();
         let dataEntries = Object.entries(data);
+        let token = sessionStorage.getItem('token');
+        let config = token !== null?{
+            headers : {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Token ' + token
+            }
+        }
+        :
+        {
+            headers : {
+            'Content-Type': 'multipart/form-data'
+            }
+        }
+
 
         for (let v in dataEntries)
         {
@@ -113,11 +127,7 @@ const SubmissionForm = (props) =>
         axios.post(
             url,
             form_data,
-            {
-                headers : {
-                'Content-Type': 'multipart/form-data'
-                }
-            }   
+            
         )
         .then((response) => {
             console.log(response.data);

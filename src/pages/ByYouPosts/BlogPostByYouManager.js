@@ -13,25 +13,23 @@ const BlogPostByYouManager = (props) =>
     useEffect(() => {
         let mounted = true;
 
-            let token = sessionStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
 
-            if(token !== null)
-            {
-                let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + (postData.position + 1) + '/';
-                axios.post(url, {isVisible: 'False'})
-                .then((response) => {
-                    if(mounted)
+        if(token !== null)
+        {
+            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + (postData.position + 1) + '/';
+            axios.post(url, {isVisible: 'False'})
+            .then((response) => {
+                if(mounted)
+                {
+                    updatePosts(
                     {
-                        let myPosts = postData;
-                        myPosts.posts = response.data;
-                        updatePosts(
-                        {
-                            position: postData.position,
-                            posts: response.data
-                        });
-                    }
-                })
-            }
+                        position: postData.position,
+                        posts: response.data
+                    });
+                }
+            })
+        }
 
         return () => mounted = false;
     });

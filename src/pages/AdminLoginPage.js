@@ -3,6 +3,7 @@ import axios from'axios';
 import styles from './AdminPage.module.scss';
 import BlogPostByYouManager from './ByYouPosts/BlogPostByYouManager';
 import BlogPostManager from './ByYouPosts/BlogPostManager';
+import SubmissionForm from '../components/Submissions/SubmissionForm';
 
 const AdminLoginPage = () =>
 {
@@ -11,6 +12,7 @@ const AdminLoginPage = () =>
     const [loginStatusMsg, updateLoginStatus] = useState("");
 
     const [isLoggedIn, updateLogin] = useState(sessionStorage.getItem('token') == null? false: true);
+    const [showManagers, toggleManagers] = useState(false);
 
     const loginHandler = () =>
     {
@@ -90,9 +92,14 @@ const AdminLoginPage = () =>
             </div>: 
             <div className = {styles.AdminPageContainer}>
                 <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
-                <div className = {styles.BlogPanels}>
-                    <BlogPostManager/>
-                    <BlogPostByYouManager/>                   
+                <button onClick = {() => toggleManagers(!showManagers)} className = {styles.toggleManagerButton}>{showManagers?'Create Blog Posts':'Manage Blog Posts'}</button>
+                <div className = {styles.BlogPanelsContainer}>
+                    {showManagers == false?<SubmissionForm/>:null}
+
+                    {showManagers == true?<div className = {styles.BlogPanels}>         
+                        <BlogPostManager/>
+                        <BlogPostByYouManager/>             
+                    </div>: null}
                 </div>
             </div>
             }

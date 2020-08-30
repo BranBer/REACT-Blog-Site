@@ -32,7 +32,6 @@
     justify-content: center;
     background-color: #4D457A;
     border-radius: 50px;
-    margin: 2em;
     width: 50%;
     height: auto;
 
@@ -48,7 +47,7 @@
     border-radius: 5px;
     padding: 3em;
     overflow-y: scroll;
-    width: 90%;
+    width: 80%;
 
     height: 11vh;
     transition: height .5s ease-in-out;
@@ -74,11 +73,10 @@
     
     button
     {
-        position: absolute;
+        position: relative;
         border:none;
         border-radius: 50px;
         width: 10%;
-        margin-left: 70px;
         transition: background-color 2s ease-in-out;
     }
 
@@ -86,6 +84,7 @@
     {
         background-color: lightgreen;
         padding: 1em;
+        width: 80px;
         transition: border 2s ease-in-out;
         transition: background-color 2s ease-in-out;
 

@@ -9,14 +9,23 @@ const ByYouCard = (props) =>
 
     const deleteHandler = () =>
     {
+        const token = sessionStorage.getItem('token');
         let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/delete/';
         let body = new FormData();
         body.append('id', props.id);
-        let config = {headers: {'Content-Type': 'multipart/form-data'}};
+        let config = {headers: {'Content-Type': 'multipart/form-data',
+                                'Authorization': 'Token ' + token}};
 
         axios.post(url, body, config)
         .then(response => {
-            updateShowPost(false);      
+            if(token !== null)
+            {
+                updateShowPost(false);
+            }
+            else
+            {
+                console.log("You are not logged in...How did you get here...?");
+            }        
         })
         .catch(err => {
             console.log(err);
@@ -25,14 +34,23 @@ const ByYouCard = (props) =>
 
     const visibilityHander = () =>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/UpdateVisibility/';
+        const token = sessionStorage.getItem('token');
+        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/UpdateVisibility/';
         let body = new FormData();
         body.append('id', props.id);
-        let config = {headers: {'Content-Type': 'multipart/form-data'}};
+        let config = {headers: {'Content-Type': 'multipart/form-data',
+                                'Authorization': 'Token ' + token}};
 
         axios.post(url, body, config)
         .then(response => {  
-            UpdateVisibility(!visible);
+            if(token !== null)
+            {
+                UpdateVisibility(!visible);
+            }
+            else
+            {
+                console.log("You are not logged in...How did you get here...?");
+            }  
         })
         .catch(err => {
             console.log(err);
@@ -40,7 +58,7 @@ const ByYouCard = (props) =>
     }
 
     return (
-        <div>
+        <>
             {showPost?
             <div className = {styles.ByYouCard}>
                 <div className = {styles.ByYouContent}>
@@ -61,7 +79,7 @@ const ByYouCard = (props) =>
                             className = {styles.deleteButton}>Delete</button>
                 </div>
             </div>: null}
-        </div>
+        </>
     )
 }
 

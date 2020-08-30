@@ -7,7 +7,7 @@ const SubmitPage = (props) =>
 {
     return (
         <div>
-            <SubmissionForm/>
+            
         </div>
     );
 }

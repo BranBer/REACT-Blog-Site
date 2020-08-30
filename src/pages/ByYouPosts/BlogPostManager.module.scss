@@ -66,7 +66,7 @@
     background-color: #4D457A;
 
     border-radius: 50px;
-    margin: 2em;
+    margin-right: 1em;
 }
 
 .BlogPostManageableContainer
@@ -96,7 +96,6 @@
         align-items: center;
 
         row-gap: 1em;
-        margin-left: 1em;
 
         button
         {
@@ -107,11 +106,23 @@
         {
             background-color: lightgreen;
             width: auto;
-            padding: 0.5em;
+            padding: 1em;
 
             &:hover
             {
                 background-color: rgba(144,238,144,.3);
+            }
+        }
+
+        .makeInvisibleButton
+        {
+            background-color: rgba(144,238,144,.3);
+            width: auto;
+            padding: 1em;
+
+            &:hover
+            {
+                background-color: lightgreen;
             }
         }
 

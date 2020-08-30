@@ -10,17 +10,20 @@ const BlogPostManager = (props) =>
 
     useEffect( () => {
         let mounted = true;
-
-        axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ (PostData.position + 1) + '/')
-        .then(response => {
-
-        if(mounted)
+        const token = sessionStorage.getItem('token');        
+        
+        if(token !== null)
         {
-            updatePostData({data: response.data,
-            position: PostData.position});
-        }
-        });
-
+            axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ (PostData.position + 1) + '/')
+            .then(response => {
+                if(mounted)
+                {
+                    updatePostData({data: response.data,
+                    position: PostData.position});
+                }
+            });
+        }       
+        
         return () => mounted = false;
     });
 
@@ -99,13 +102,14 @@ const BlogPostManager = (props) =>
     let posts = PostData.data !== undefined?Object.entries(PostData.data).map(
         (object, index) => 
         {
-            return (<BlogPostManageable key = {index}
+            return (<BlogPostManageable key = {'manageablePost' + index.toString()}
                               title = {object[1]['post_title']}
                               author = {object[1]['author']}
                               content = {object[1]['post_content']}
                               date = {object[1]['date']}
                               images = {object[1]['images']}
                               id = {object[1]['id']}
+                              isVisible = {object[1]['isVisible']}
                                />);
         }
     ): null;
