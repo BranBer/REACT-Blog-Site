@@ -14,6 +14,11 @@ const AdminLoginPage = () =>
     const [isLoggedIn, updateLogin] = useState(sessionStorage.getItem('token') == null? false: true);
     const [showManagers, toggleManagers] = useState(false);
 
+    useEffect(() => 
+    {
+        //updateLogin(sessionStorage.getItem('token') == null? false: true);
+    });
+
     const loginHandler = () =>
     {
         let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/login/';
@@ -64,16 +69,16 @@ const AdminLoginPage = () =>
     }
 
     const logoutHandler = () =>
-    {
-        sessionStorage.setItem('token', null);
+    {        
         updateLogin(false);
+        sessionStorage.setItem('token', null);
     }
 
     return (
         <div className = {styles.AdminPageContainer}>
             {isLoggedIn == false?
             <div className = {styles.AdminLoginContainer}>
-                <h2>👑 Login</h2>
+                <h2>👑Admin Login</h2>
                 <hr/>
                 <div className = {styles.LoginInput}>
                     <label>Username</label>
@@ -94,7 +99,9 @@ const AdminLoginPage = () =>
                 <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
                 <button onClick = {() => toggleManagers(!showManagers)} className = {styles.toggleManagerButton}>{showManagers?'Create Blog Posts':'Manage Blog Posts'}</button>
                 <div className = {styles.BlogPanelsContainer}>
-                    {showManagers == false?<SubmissionForm/>:null}
+                    {showManagers == false?<div>
+                        <SubmissionForm/>
+                    </div>:null}
 
                     {showManagers == true?<div className = {styles.BlogPanels}>         
                         <BlogPostManager/>

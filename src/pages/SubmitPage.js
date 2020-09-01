@@ -1,13 +1,12 @@
 import React from 'react';
-import SubmissionForm from '../components/Submissions/SubmissionForm';
-
+import ViewerSubmissionForm from '../components/Submissions/ViewerSubmissionForm';
 
 
 const SubmitPage = (props) =>
 {
     return (
         <div>
-            
+            <ViewerSubmissionForm/>
         </div>
     );
 }

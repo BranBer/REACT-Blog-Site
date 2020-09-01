@@ -1,0 +1,61 @@
+.ViewerSubmissionContainer
+{
+    margin: 2em;
+    padding: 2em;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 60%;
+    height: auto;
+    background-color: #4D457A;
+
+    color:white;
+
+    h2
+    {
+        font-family: 'marck script';
+        font-size: 42px;
+    }
+
+    sub
+    {
+        font-size: 12px;
+    }
+
+    hr
+    {
+        width: 80%;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .inputAlign
+    {
+        display: inline-block;
+        width: 300px;
+        text-align: right;
+    }
+
+    textarea
+    {
+        width: 90%;
+        min-height: 150px;
+        height: auto;
+        border: 10px solid lightgrey;
+        border-radius: 50px;
+        margin-top: 1em;
+        padding: 2em;
+    
+        &:focus
+        {
+            outline: none;
+        }
+    }
+
+    button
+    {
+        margin: 1em;
+    }
+}

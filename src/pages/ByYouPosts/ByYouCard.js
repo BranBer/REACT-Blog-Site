@@ -62,22 +62,24 @@ const ByYouCard = (props) =>
             {showPost?
             <div className = {styles.ByYouCard}>
                 <div className = {styles.ByYouContent}>
-                    <h2>{props.title}</h2>
-                    <sub>{props.author}</sub>
-                    <br/>
-                    <sub>{props.date}</sub>
-                    <hr/>
-                    <p>
-                        {props.content}
-                    </p>
+                    <div className = {styles.ByYouHeader}>
+                        <h2>{props.title}</h2>
+                        <sub>{props.author}</sub>
+                        <sub>{props.date}</sub>
+                    </div>
+                    <div className = {styles.PostOptions}>
+                        <button onClick = {visibilityHander} 
+                                className = {!visible?styles.makeVisibleButton:styles.makeInvisibleButton}>{!visible?'Hide':'Show'}</button>
+                        <button onClick = {deleteHandler} 
+                                className = {styles.deleteButton}>Delete</button>
+                    </div>
                 </div>
+
+                <p>
+                    {props.content}
+                </p>
     
-                <div className = {styles.PostOptions}>
-                    <button onClick = {visibilityHander} 
-                            className = {!visible?styles.makeVisibleButton:styles.makeInvisibleButton}>Make Visible</button>
-                    <button onClick = {deleteHandler} 
-                            className = {styles.deleteButton}>Delete</button>
-                </div>
+
             </div>: null}
         </>
     )

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import AddImage from './AddImage';
 import base64Stringtofile from './stringToFile';
@@ -9,11 +9,16 @@ import styles from './SubmissionForm.module.scss'
 const SubmissionForm = (props) =>
 {
     const [images, updateImages] = useState({count: [1]});
-
+    const [token, updateToken] = useState(sessionStorage.getItem('token'));
     const [postData, updatePostData] = useState({
         post_title: null,
         author: null,
         date: null
+    });
+
+    useEffect(() =>
+    {
+        updateToken(sessionStorage.getItem('token'));
     });
 
     const addAnotherImage = () =>
@@ -87,26 +92,16 @@ const SubmissionForm = (props) =>
     const uploadContent = () =>
     {
         let data = postData;
-        console.log(data);
 
         let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/';
 
         let form_data = new FormData();
         let dataEntries = Object.entries(data);
-        let token = sessionStorage.getItem('token');
-        let config = token !== null?{
-            headers : {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Token ' + token
-            }
-        }
-        :
-        {
+        let config = {
             headers : {
             'Content-Type': 'multipart/form-data'
             }
         }
-
 
         for (let v in dataEntries)
         {
@@ -124,15 +119,30 @@ const SubmissionForm = (props) =>
             }
         }
         
-        axios.post(
-            url,
-            form_data,
-            
-        )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch(err => console.log(err));        
+        if(token !== null)
+        {
+            const authToken = 'Token ' + token.toString();
+            config = {
+                headers : {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': authToken
+                }
+            };
+        
+            axios.post(
+                url,
+                form_data,
+                config
+            )
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
+        }
+        else
+        {
+            console.log("You must be logged in first!")
+        }        
     }
 
 

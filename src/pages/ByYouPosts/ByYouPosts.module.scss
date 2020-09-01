@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-self: flex-start;
     width: 100%;
     color: white;
     font-family: "marck script";
@@ -42,13 +43,12 @@
 .ByYouCard
 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: white;
     border-radius: 5px;
     padding: 3em;
-    overflow-y: scroll;
     width: 80%;
-
+    
     height: 11vh;
     transition: height .5s ease-in-out;
     
@@ -59,7 +59,21 @@
 
     .ByYouContent
     {
-        width: 70%;
+        display: flex;
+        flex-direction: row;
+        height: 14em;
+    }
+
+    .ByYouHeader
+    {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+    }
+
+    p
+    {
+        overflow-y: scroll;
     }
 }
 
@@ -68,8 +82,6 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-
-    padding: 1em;
     
     button
     {
@@ -78,6 +90,7 @@
         border-radius: 50px;
         width: 10%;
         transition: background-color 2s ease-in-out;
+        margin-left: 2em;
     }
 
     .makeVisibleButton
@@ -90,20 +103,21 @@
 
         &:hover
         {
-            background-color: lightyellow;
+            background-color: rgba(144,238,144,.3);
         }
     }
 
     .makeInvisibleButton
     {
-        background-color: transparent;
+        background-color: rgba(144,238,144,.3);
         padding: 1em;
+        width: 80px;
         transition: border 2s ease-in-out;
         transition: background-color 2s ease-in-out;
 
         &:hover
         {
-            background-color: rgba(0, 0, 0, .25);
+            background-color: lightgreen;
         }
     }
 

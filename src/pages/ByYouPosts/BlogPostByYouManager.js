@@ -6,6 +6,8 @@ import styles from './ByYouPosts.module.scss';
 
 const BlogPostByYouManager = (props) =>
 {
+    const postsPerPage = 4;
+
     const [postData, updatePosts] = useState({
         position: 0,
         posts: {}});
@@ -17,7 +19,7 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + (postData.position + 1) + '/';
+            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
                 if(mounted)
@@ -37,34 +39,36 @@ const BlogPostByYouManager = (props) =>
     const getNextPosts = () =>
     {
         let myPostData = postData;
-        myPostData.position += 1;
+        myPostData.position += postsPerPage;
         updatePosts(myPostData);
+
+        const prevData = postData.posts;
 
         let token = sessionStorage.getItem('token');
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + (postData.position + 1) + '/';
+            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
-                let myPosts = postData;
-                myPosts.posts = response.data;
+                let newPos = postData.position;
+
+                if(JSON.stringify(response.data) == JSON.stringify(prevData))
+                {
+                    newPos -= postsPerPage;
+                }
+
+
                 updatePosts(
                 {
-                    position: postData.position,
+                    position: newPos,
                     posts: response.data
                 });       
 
-                console.log(postData);
+                console.log(response.data);
             })
             .catch((error) =>
             {
-                
-                let myPosts = postData;
-                let newPosition = myPosts.position - 1;
-                myPosts.position = newPosition;
-                updatePosts(myPosts);
-
                 console.log('Out of bounds');       
             });
         }
@@ -73,18 +77,20 @@ const BlogPostByYouManager = (props) =>
     const getPrevPosts = () =>
     {
         let myPostData = postData;
-        myPostData.position -= 1;
+        myPostData.position = myPostData.position - 4 > 0? myPostData.position - 4: 0;
         updatePosts(myPostData);
 
         let token = sessionStorage.getItem('token');
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + (postData.position + 1) + '/';
+            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
                 let myPosts = postData;
                 myPosts.posts = response.data;
+
+
                 updatePosts(
                 {
                     position: postData.position,
@@ -95,12 +101,6 @@ const BlogPostByYouManager = (props) =>
             })
             .catch((error) =>
             {
-                
-                let myPosts = postData;
-                let newPosition = myPosts.position + 1;
-                myPosts.position = newPosition;
-                updatePosts(myPosts);
-
                 console.log('Out of bounds');       
             });
         }
