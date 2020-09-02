@@ -1,0 +1,18 @@
+.SelectedByYouContainer
+{
+    width: 60%;
+    min-width: 600px;
+    background-color: white;
+    padding: 2em;
+    margin: 2em;
+
+    border-radius: 15px;
+
+    box-shadow: 5px 5px 15px 0 black;
+
+    button{
+        border-radius: 0;
+        background-color: black;
+        color: white;
+    }
+}

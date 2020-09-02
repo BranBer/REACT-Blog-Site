@@ -11,6 +11,7 @@ import AdminLoginPage from '../pages/AdminLoginPage';
 import ByYouPanel from '../components/ByYou/ByYouPanel';
 import BlogPostSelected from '../components/BlogPost/BlogPostSelected';
 import {SelectedPostContext} from '../components/BlogPost/SelectedPostContext';
+import SelectedByYouPost from '../components/ByYou/SelectedByYouPost';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/Submit" component = {SubmitPage}/>
           <Route path="/post/:id" component = {BlogPostSelected}/> 
           <Route path="/AdminLogin" component = {AdminLoginPage}/> 
+          <Route path="/postsByYou/:id" component = {SelectedByYouPost}/>
           <Route path="/" component = {HomePage}/> 
         </Switch>
 

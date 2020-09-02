@@ -1,25 +1,24 @@
-.byYouPanelContainer
-{
+.BlogPostsContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
-    height: auto;
-    min-width: 500px;
-    background-color: #4D457A;
-    margin: 2em;
-    border-radius: 15px;
-    color: white;
-
     
+    hr
+    {
+        width: 90%;
+    }
+
     .PostCycler
     {
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
+        font-size: 24px;
         button
         {
-            color:white;
             background-color: transparent;
+            color: white;
+            font-size: 24px;
 
             &:hover
             {
