@@ -15,13 +15,6 @@ import SelectedByYouPost from '../components/ByYou/SelectedByYouPost';
 
 function App() {
 
-  const PostContext = useContext(SelectedPostContext);  
-
-  const showContext = () =>
-  {
-    console.log(PostContext.CurrentPostData);  
-  }
-
   return (
     <Router>    
       <div className="App">

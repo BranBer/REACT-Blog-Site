@@ -5,13 +5,16 @@ import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
 import {SelectedPostProvider} from '../src/components/BlogPost/SelectedPostContext';
+import {GeneralContextProvider} from './components/GeneralContext';
 
 ReactDOM.render(
-  <SelectedPostProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </SelectedPostProvider>,
+  <GeneralContextProvider>
+    <SelectedPostProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </SelectedPostProvider>
+  </GeneralContextProvider>,
   document.getElementById('root')
 );
 

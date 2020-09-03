@@ -1,22 +1,48 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from'axios';
 import styles from './AdminPage.module.scss';
 import BlogPostByYouManager from './ByYouPosts/BlogPostByYouManager';
 import BlogPostManager from './ByYouPosts/BlogPostManager';
 import SubmissionForm from '../components/Submissions/SubmissionForm';
+import {GeneralContext} from '../components/GeneralContext';
 
 const AdminLoginPage = () =>
 {
+    const myContext = useContext(GeneralContext);
+
+    const [showLogin, updateShowLogin] = useState(sessionStorage.getItem('token') !== 'null');
+    
     const [Credentials, UpdateCredentials] = useState({username: '', password: ''});
 
     const [loginStatusMsg, updateLoginStatus] = useState("");
 
-    const [isLoggedIn, updateLogin] = useState(sessionStorage.getItem('token') == null? false: true);
     const [showManagers, toggleManagers] = useState(false);
+
 
     useEffect(() => 
     {
-        //updateLogin(sessionStorage.getItem('token') == null? false: true);
+        let mounted = true;
+        if(mounted)
+        {
+            const token = sessionStorage.getItem('token');
+
+
+            if(token === 'null')
+            {
+                console.log(token);
+
+                updateShowLogin(true);
+            }
+            else
+            {
+                updateShowLogin(false);
+            }
+
+            
+            console.log('logged in status ' + showLogin.toString());
+        }
+
+        return () => mounted = false;
     });
 
     const loginHandler = () =>
@@ -48,7 +74,8 @@ const AdminLoginPage = () =>
             if (response.status == 200)
             {
                 updateLoginStatus("Login Success");
-                updateLogin(true);
+                updateShowLogin(true);
+                console.log('Logged In');
             }
         })
         .catch(err => updateLoginStatus("Invalid Credentials"));
@@ -70,13 +97,13 @@ const AdminLoginPage = () =>
 
     const logoutHandler = () =>
     {        
-        updateLogin(false);
-        sessionStorage.setItem('token', null);
+        sessionStorage.setItem('token', 'null');
+        updateShowLogin(true);
     }
 
     return (
         <div className = {styles.AdminPageContainer}>
-            {isLoggedIn == false?
+            {showLogin === true?
             <div className = {styles.AdminLoginContainer}>
                 <h2>👑Admin Login</h2>
                 <hr/>
