@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import styles from './BlogPostSelected.module.scss';
 import {useHistory} from 'react-router-dom';
+import CommentsSection from './CommentsSection';
 
 const BlogPostSelected = (props) =>
 {
@@ -36,21 +37,26 @@ const BlogPostSelected = (props) =>
     <div className = {styles.SelectedPostContainer}>
         {
             SelectedPostData.data !== null?
-            <div className = {styles.SelectedPost}>
-                <h1>{SelectedPostData.data[0].post_title}</h1>
+            <>
+                <div className = {styles.SelectedPost}>
+                    <h1>{SelectedPostData.data[0].post_title}</h1>
 
-                <div className = {styles.PostGalleryImage}>
-                    <GalleryImage images = {SelectedPostData.data[0].images}/>
+                    <div className = {styles.PostGalleryImage}>
+                        <GalleryImage images = {SelectedPostData.data[0].images}/>
+                    </div>
+
+                    <br/>
+                    <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       
+                    <hr/>
+                    <br/>
+                    <sub>{SelectedPostData.data[0].author}</sub>
+                    <sub>{(new Date(SelectedPostData.data[0].date)).toLocaleString()}</sub>
+                    <br/>
                 </div>
-
-                <br/>
-                <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       
-                <hr/>
-                <br/>
-                <sub>{SelectedPostData.data[0].author}</sub>
-                <sub>{(new Date(SelectedPostData.data[0].date)).toLocaleString()}</sub>
-                <br/>
-            </div>
+                <div>
+                    <CommentsSection post_id = {SelectedPostData.data[0].id}/>
+                </div>
+            </>
             : <p>Not Loaded</p>
         }
         
