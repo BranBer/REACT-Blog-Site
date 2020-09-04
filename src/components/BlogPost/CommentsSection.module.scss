@@ -1,0 +1,43 @@
+
+
+.CommentContainer
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1em 0em 1em;
+    border-left: 1px solid darkgray;
+    border-top: 1px solid darkgray;
+    width: 80%;
+
+    .CommentHeader
+    {
+        
+        height: 4em;
+        
+        background-color: black;
+        color:white;
+        padding-left: 1em;
+        border-radius: 50px;
+
+        //border-radius: 50px 50px 50px 50px;
+    }
+
+
+    .CommentContent
+    {
+        background-color: white;
+        padding: 1em;
+        margin: 1em 0 1em 0;
+        border-radius: 15px;
+        width: 100%;
+
+    }
+
+    p
+    {
+        padding-left: 1em;
+        width: 100%;
+    }
+    
+}

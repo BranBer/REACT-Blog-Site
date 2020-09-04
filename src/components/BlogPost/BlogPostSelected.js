@@ -31,37 +31,46 @@ const BlogPostSelected = (props) =>
         });
 
         return () => mounted = false;
-    });
+    }, []);
 
     return (
-    <div className = {styles.SelectedPostContainer}>
+    <div className = {styles.SelectedPostParent}>
+        <div className = {styles.SelectedPostContainer}>
+            {
+                SelectedPostData.data !== null?
+                <>
+                    <div className = {styles.SelectedPost}>
+                        <h1>{SelectedPostData.data[0].post_title}</h1>
+
+                        <div className = {styles.PostGalleryImage}>
+                            <GalleryImage images = {SelectedPostData.data[0].images}/>
+                        </div>
+
+                        <br/>
+                        <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       
+                        <hr/>
+                        <br/>
+                        <sub>{SelectedPostData.data[0].author}</sub>
+                        <sub>{(new Date(SelectedPostData.data[0].date)).toLocaleString()}</sub>
+                        <br/>
+                    </div>
+                </>
+                : <p>Not Loaded</p>
+            }
+            
+            <button onClick = {() => history.goBack()}>⬅ Go Back</button>
+        </div>
+        
         {
             SelectedPostData.data !== null?
-            <>
-                <div className = {styles.SelectedPost}>
-                    <h1>{SelectedPostData.data[0].post_title}</h1>
-
-                    <div className = {styles.PostGalleryImage}>
-                        <GalleryImage images = {SelectedPostData.data[0].images}/>
-                    </div>
-
-                    <br/>
-                    <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       
-                    <hr/>
-                    <br/>
-                    <sub>{SelectedPostData.data[0].author}</sub>
-                    <sub>{(new Date(SelectedPostData.data[0].date)).toLocaleString()}</sub>
-                    <br/>
-                </div>
-                <div>
-                    <CommentsSection post_id = {SelectedPostData.data[0].id}/>
-                </div>
-            </>
-            : <p>Not Loaded</p>
+            <div className = {styles.CommentsSectionContainer}>
+                <h2>Comments</h2>
+                <CommentsSection post_id = {SelectedPostData.data[0].id}/>
+            </div>
+            :null
         }
-        
-        <button onClick = {() => history.goBack()}>⬅ Go Back</button>
-    </div>);
+    </div>
+    );
 }
 
 export default BlogPostSelected;
