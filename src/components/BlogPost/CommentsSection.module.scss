@@ -1,5 +1,4 @@
 
-
 .CommentContainer
 {
     display: flex;
@@ -8,21 +7,45 @@
     padding: 0 1em 0em 1em;
     border-left: 1px solid darkgray;
     border-top: 1px solid darkgray;
-    width: 80%;
+    width: 90%;
+    min-width: 25em;
 
-    .CommentHeader
+    .CommentHeaderContainer
     {
-        
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        min-width: 20em;
+        justify-content: space-between;
+        align-items: center;
+
+        background-color: lightgray;
+        color:black;
         height: 4em;
         
-        background-color: black;
-        color:white;
+
         padding-left: 1em;
         border-radius: 50px;
 
-        //border-radius: 50px 50px 50px 50px;
-    }
+        button
+        {
+            padding: .75em 1em;
+            margin: 0 1em;
+            background-color: black;
+            color: white;
+        }
 
+        .Voting
+        {
+            display: flex;
+            flex-direction: column;
+            button
+            {
+                color: black;
+                background-color: transparent;
+            }
+        }
+    }
 
     .CommentContent
     {
@@ -31,7 +54,6 @@
         margin: 1em 0 1em 0;
         border-radius: 15px;
         width: 100%;
-
     }
 
     p
