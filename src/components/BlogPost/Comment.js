@@ -9,6 +9,9 @@ const Comment = (props) =>
     let [showComment, updateShowComment] = useState(false);
     let [netScore, updateNetScore] = useState(props.votes);
 
+    let [showReply, updateShowReply] = useState(false);
+    let [reply, updateReply] = useState('');
+
     if(props.replies !== [])
     {
         replies = props.replies.map((object, index) =>
@@ -20,6 +23,7 @@ const Comment = (props) =>
                              author = {object.username}
                              date = {object.date_posted}
                              votes = {object.net_votes}
+                             reloadComments = {props.reloadComments}
                              replies = {object.reply}/>
             );
         });
@@ -67,6 +71,48 @@ const Comment = (props) =>
         }
     }
 
+    const submitReply = () =>
+    {
+        let token = sessionStorage.getItem('token');
+
+        if(reply !== '' && (token !== null && token !== 'null'))
+        {
+            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/comment/';
+            
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': 'Token ' + token
+                }
+            };
+
+            let form_data = new FormData();
+            form_data.append('comment', reply);
+            form_data.append('comment_id', props.comment_id);
+
+            axios.post(url, form_data, config)
+            .then(
+                response =>
+                {
+                    console.log("Successfully replied to comment " + props.comment_id);
+                    updateShowReply(false);
+                    props.reloadComments();
+                }
+            )
+            .catch(                
+                err =>
+                {
+                    console.error("Something went wrong.");
+                }                
+            );
+        }
+    }
+
+    const updateReplyHandler = (event) =>
+    {
+        updateReply(event.target.value);
+    }
+    
     return(
     <div className = {styles.CommentContainer}>
         <div className = {styles.CommentContent}>
@@ -91,10 +137,25 @@ const Comment = (props) =>
                 <button onClick = {() => {updateShowComment(!showComment)}}>{showComment?'-':'+'}</button>
             </div>
             
-            {showComment?<p>
+            <p>
                 {props.comment}
-            </p>:null}
+            </p>
         </div>
+        
+        <div className = {styles.CommentOptions}>
+            <ul>
+                <li onClick = {() => updateShowReply(!showReply)}
+                    style = {showReply?{borderBottom: '4px solid darkgrey'}:{}}
+                    >Reply</li>
+                <li>Report</li>
+            </ul>
+        </div>
+
+        {showReply?
+                    <div className = {styles.CommentOptionForm}>
+                        <textarea onChange = {updateReplyHandler}></textarea>
+                        <button onClick = {submitReply}>Submit Reply</button>
+                    </div>:null}
 
         {showComment?<div>
             {replies}

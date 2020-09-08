@@ -45,13 +45,14 @@
                 background-color: transparent;
             }
         }
+
     }
 
     .CommentContent
     {
         background-color: white;
         padding: 1em;
-        margin: 1em 0 1em 0;
+        margin: 1em 0 0 0;
         border-radius: 15px;
         width: 100%;
     }
@@ -61,5 +62,74 @@
         padding-left: 1em;
         width: 100%;
     }
+
+    
+    .CommentOptions
+    {
+        ul
+        {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            
+            li
+            {
+                padding: 1em 2em 1em 2em;
+                cursor: pointer;
+
+                &:hover
+                {
+                    border-bottom: 4px solid darkgrey;
+                }
+            }
+        }
+    }
+
+    .CommentOptionForm
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 2em 0 2em;
+
+        padding: 2em;
+        border-radius: 15px;
+        row-gap: 1em;
+        width: 90%;   
+        
+        textarea{
+            max-width: 95%;
+            width: 95%;
+            min-height: 5em;
+        }
+
+        button
+        {
+            color: white;
+            background-color: black;
+        }
+    }
+}
+
+.CreateCommentContainer
+{
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 1em;
+
+    textarea
+    {
+        width: 100%;
+        min-height: 5em;
+    }
+
+    button
+    {
+        background-color: black;
+        color: white;
+    }
+
     
 }
