@@ -71,6 +71,7 @@
             list-style: none;
             display: flex;
             flex-direction: row;
+            align-items: center;
             
             li
             {
@@ -82,7 +83,11 @@
                     border-bottom: 4px solid darkgrey;
                 }
             }
-        }
+
+            hr{
+                height: 1.5em;
+            }
+        }       
     }
 
     .CommentOptionForm
@@ -130,6 +135,4 @@
         background-color: black;
         color: white;
     }
-
-    
 }

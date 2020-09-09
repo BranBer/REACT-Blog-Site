@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styles from './SelectedByYouPost.module.scss';
 import axios from 'axios';
+import CommentsSection from '../Comments/CommentsSection';
 import {useHistory} from 'react-router-dom';
 
 const SelectedByYouPost = (props) =>
@@ -31,23 +32,38 @@ const SelectedByYouPost = (props) =>
     });
 
     return (
-        <div className = {styles.SelectedByYouContainer}>
+        <div className = {styles.SelectedByYouParent}>
             {ByYouPostData !== null?
-            <div >
-                <h2>{ByYouPostData[0].post_title}</h2>
-                <hr/>
-                <p>{ByYouPostData[0].post_content}</p>
-                <br/>
-                <sub>{ByYouPostData[0].author}</sub>
-                <br/>
-                <sub>{(new Date(ByYouPostData[0].date)).toLocaleString()}</sub>
+            <div className = {styles.SelectedByYouContainer}>
+                <div className = {styles.SelectedByYouContent}>
+                    <h2>{ByYouPostData[0].post_title}</h2>
+                    <hr/>
+                    <p>{ByYouPostData[0].post_content}</p>
+                    <br/>
+                    <sub>{ByYouPostData[0].author}</sub>
+                    <br/>
+                    <sub>{(new Date(ByYouPostData[0].date)).toLocaleString()}</sub>
+                </div>
 
             </div>
             :
             <p>'Something Went Wrong Here...'</p>}
 
             <br/>
-            <button onClick = {() => history.goBack()}>⬅ Go Back</button>
+            <button className = {styles.GoBackButton}
+                    onClick = {() => history.goBack()}>
+                        ⬅ Go Back
+            </button>
+
+
+            {
+                ByYouPostData !== null?
+                <div className = {styles.CommentsSectionContainer}>
+                    <h2>Comments</h2>
+                    <CommentsSection post_id = {id}/>
+                </div>
+                :null
+            }
         </div>);
 }
 

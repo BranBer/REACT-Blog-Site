@@ -1,18 +1,57 @@
+.SelectedByYouParent
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 60%;
+    margin: 1em;
+    box-shadow: 5px 5px 5px black;
+    background-color: white;
+    min-width: 700px;
+
+    .GoBackButton
+    {
+        margin: 2em;
+        color: white;
+        background-color: black;
+    }
+}
+
 .SelectedByYouContainer
 {
-    width: 60%;
+    width: 100%;
     min-width: 600px;
-    background-color: white;
-    padding: 2em;
-    margin: 2em;
+    
 
     border-radius: 15px;
 
-    box-shadow: 5px 5px 15px 0 black;
 
     button{
-        border-radius: 0;
         background-color: black;
         color: white;
+    }
+
+    .SelectedByYouContent
+    {
+        padding: 2em;
+    }
+}
+
+.CommentsSectionContainer
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-image: linear-gradient(to bottom, white, lightgrey);
+
+    h2
+    {
+        align-self: center;
+    }
+
+    textarea
+    {
+        width: 95%;
+        max-width: 100%;
     }
 }

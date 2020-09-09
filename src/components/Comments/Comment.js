@@ -16,6 +16,7 @@ const Comment = (props) =>
     {
         replies = props.replies.map((object, index) =>
         {
+            let newReplyLength = props.replies.length - 1;
             return (
                     <Comment key = {'comment' + object.id.toString()}
                              comment_id = {object.id}
@@ -24,7 +25,8 @@ const Comment = (props) =>
                              date = {object.date_posted}
                              votes = {object.net_votes}
                              reloadComments = {props.reloadComments}
-                             replies = {object.reply}/>
+                             replies = {object.reply}
+                             replyLength = {newReplyLength}/>
             );
         });
     }
@@ -134,7 +136,10 @@ const Comment = (props) =>
                     </div>
                 </div>
 
+                {replies.length > 0?
                 <button onClick = {() => {updateShowComment(!showComment)}}>{showComment?'-':'+'}</button>
+                :null}
+                
             </div>
             
             <p>
@@ -144,12 +149,18 @@ const Comment = (props) =>
         
         <div className = {styles.CommentOptions}>
             <ul>
+                <hr/>
                 <li onClick = {() => updateShowReply(!showReply)}
                     style = {showReply?{borderBottom: '4px solid darkgrey'}:{}}
                     >Reply</li>
+                <hr/>
                 <li>Report</li>
+                <hr/>
             </ul>
         </div>
+
+        {props.replies.length > 0? <p>{props.replyLength + 1} Replies</p>
+        : props.replies.length == 1? <p>1 Reply </p> :null}
 
         {showReply?
                     <div className = {styles.CommentOptionForm}>

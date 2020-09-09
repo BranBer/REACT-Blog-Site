@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import styles from './BlogPostSelected.module.scss';
 import {useHistory} from 'react-router-dom';
-import CommentsSection from './CommentsSection';
+import CommentsSection from '../Comments/CommentsSection';
 
 const BlogPostSelected = (props) =>
 {

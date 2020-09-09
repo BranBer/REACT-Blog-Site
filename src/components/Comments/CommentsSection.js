@@ -8,6 +8,8 @@ const CommentsSection = (props) => {
 
     const [commentSubmission, updateCommentSubmission] = useState('');
 
+    const [statusMessage, updateStatusMessage] = useState('');
+
     const getComments = () =>
     {
         let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/comments/' + props.post_id + '/';
@@ -56,6 +58,7 @@ const CommentsSection = (props) => {
                 {
                     console.log('Successfully commented on post with an id of ' + props.post_id + ".");
                     getComments();
+                    updateStatusMessage('Successfully Commented!');
                 })
             .catch(
                 err =>
@@ -76,7 +79,8 @@ const CommentsSection = (props) => {
                      date = {object[1].date_posted}
                      votes = {object[1].net_votes}
                      replies = {object[1].reply}
-                     reloadComments = {getComments}/>
+                     reloadComments = {getComments}
+                     replyLength = {object[1].reply.length - 1}/>
                      
         );
     });
@@ -85,10 +89,11 @@ const CommentsSection = (props) => {
     return (
     <div>
         {
-        sessionStorage.getItem('token') !== null || sessionStorage.getItem('token') !== 'null' ?
+        sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null' ?
         <div className = {styles.CreateCommentContainer}>
             <textarea onChange = {commentChangeHandler}></textarea>
             <button onClick = {submitComment}>Submit Comment</button>
+            <sub>{statusMessage}</sub>
         </div>: 
         <div className = {styles.CreateCommentContainer}>
             <p>Login First To Comment</p>
