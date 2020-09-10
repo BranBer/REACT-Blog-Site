@@ -6,11 +6,11 @@ import BlogPostManager from './ByYouPosts/BlogPostManager';
 import SubmissionForm from '../components/Submissions/SubmissionForm';
 import {GeneralContext} from '../components/GeneralContext';
 
-const AdminLoginPage = () =>
+const AdminPage = () =>
 {
     const myContext = useContext(GeneralContext);
 
-    const [showLogin, updateShowLogin] = useState(sessionStorage.getItem('token') !== 'null');
+    const [showLogin, updateShowLogin] = useState(sessionStorage.getItem('token') !== 'null' && sessionStorage.getItem('token') !== null);
     
     const [Credentials, UpdateCredentials] = useState({username: '', password: ''});
 
@@ -27,7 +27,7 @@ const AdminLoginPage = () =>
             const token = sessionStorage.getItem('token');
 
 
-            if(token === 'null')
+            if(token == 'null' || token == null)
             {
                 console.log(token);
 
@@ -141,4 +141,4 @@ const AdminLoginPage = () =>
     );
 }
 
-export default AdminLoginPage;
+export default AdminPage;

@@ -1,0 +1,40 @@
+
+.LoginContainer
+{
+    display: flex;
+    flex-direction: column;
+
+    margin: 2em;
+    padding: 2em;
+    background-color: white;
+    width: 60%;
+    color: black;
+    align-items: center;
+    row-gap: 1em;
+
+    box-shadow: 5px 5px 15px black;
+
+    .loginField
+    {
+        display: flex;
+        justify-content: space-around;
+        
+        label
+        {
+            width: 125px;
+            padding-right: 20px;
+            text-align: right;
+        }
+    }
+
+    hr
+    {
+        width: 75%;
+    }
+
+    button
+    {
+        color: white;
+        background-color: black;
+    }
+}

@@ -7,9 +7,11 @@ import AboutPage from '../pages/AboutPage';
 import BlogPostsPage from '../pages/BlogPostsPage';
 import HomePage from '../pages/HomePage';
 import SubmitPage from '../pages/SubmitPage';
-import AdminLoginPage from '../pages/AdminLoginPage';
+import AdminPage from '../pages/AdminPage';
 import ByYouPanel from '../components/ByYou/ByYouPanel';
 import BlogPostSelected from '../components/BlogPost/BlogPostSelected';
+import Login from '../components/Login/Login';
+import Registration from '../components/Register/Registration';
 import {SelectedPostContext} from '../components/BlogPost/SelectedPostContext';
 import SelectedByYouPost from '../components/ByYou/SelectedByYouPost';
 
@@ -27,7 +29,9 @@ function App() {
           <Route path="/BlogPostsByYou" component = {ByYouPanel}/>
           <Route path="/Submit" component = {SubmitPage}/>
           <Route path="/post/:id" component = {BlogPostSelected}/> 
-          <Route path="/AdminLogin" component = {AdminLoginPage}/> 
+          <Route path="/AdminLogin" component = {AdminPage}/> 
+          <Route path="/Login" component = {Login}/> 
+          <Route path="/Register" component = {Registration}/> 
           <Route path="/postsByYou/:id" component = {SelectedByYouPost}/>
           <Route path="/" component = {HomePage}/> 
         </Switch>

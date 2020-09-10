@@ -39,7 +39,7 @@ const BlogPostManager = (props) =>
 
         let token = sessionStorage.getItem('token');
     
-        if(token !== null)
+        if(token !== null && token !== 'null')
         {
             let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/'+ PostData.position + '/' + postsPerPage + '/';
             axios.get(url)
