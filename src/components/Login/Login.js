@@ -74,10 +74,11 @@ const Login = (props) =>
                 <label>Password</label>
                 <input type = 'password' onChange = {passwordChangedHandler}/>
             </div>
+            <Link className = {styles.forgotPassword} to = "/ForgotPassword">Forgot Password?</Link>
+            <Link className = {styles.registerLink} to = "/Registration">or Register Here...</Link>
             <sub>{statusMessage}</sub>
 
             <hr/>
-            <Link className = {styles.registerLink} to = "/Registration">or Register Here...</Link>
             <button onClick = {loginHandler}>Login</button>
             
         </div>

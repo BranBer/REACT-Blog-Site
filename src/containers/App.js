@@ -12,6 +12,8 @@ import ByYouPanel from '../components/ByYou/ByYouPanel';
 import BlogPostSelected from '../components/BlogPost/BlogPostSelected';
 import Login from '../components/Login/Login';
 import Registration from '../components/Register/Registration';
+import ForgotPassword from '../components/ForgotPassword/ForgotPassword';
+import ResetPassword from '../components/ResetPassword/ResetPassword';
 import {SelectedPostContext} from '../components/BlogPost/SelectedPostContext';
 import SelectedByYouPost from '../components/ByYou/SelectedByYouPost';
 
@@ -32,6 +34,8 @@ function App() {
           <Route path="/AdminLogin" component = {AdminPage}/> 
           <Route path="/Login" component = {Login}/> 
           <Route path="/Register" component = {Registration}/> 
+          <Route path="/ForgotPassword" component = {ForgotPassword}/> 
+          <Route path="/ResetPassword" component = {ResetPassword}/>
           <Route path="/postsByYou/:id" component = {SelectedByYouPost}/>
           <Route path="/" component = {HomePage}/> 
         </Switch>
