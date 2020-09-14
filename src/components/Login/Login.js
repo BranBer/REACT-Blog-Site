@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './Login.module.scss';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 const Login = (props) =>
 {
     const [statusMessage, updateStatusMessage] = useState('');
+    const [isLoggedIn, updateIsLoggedIn] = useState(false);
     const [credentials, updateCredentials] = useState({
         username: '',
         password: ''
@@ -45,6 +46,12 @@ const Login = (props) =>
 
     }
 
+    const logoutHandler = () =>
+    {
+        sessionStorage.setItem('token', null);
+        updateIsLoggedIn(false);
+    }
+
     const usernameChangedHandler = (event) =>
     {
         let myCred = credentials;
@@ -59,27 +66,49 @@ const Login = (props) =>
         updateCredentials(myCred);
     }
 
+    useEffect(()=>
+    {
+
+        let token = sessionStorage.getItem('token');
+        
+        if(token !== null && token !== 'null')
+        {
+            updateIsLoggedIn(true);
+        }
+        else
+        {
+            updateIsLoggedIn(false);
+        }
+    }, []);
 
     return (
         <div className = {styles.LoginContainer}>
             <h2>Login</h2>
             <hr/>
+            {!isLoggedIn?
+            <>
+                <div className = {styles.loginField}>
+                    <label>Username</label>
+                    <input type = 'text' onChange = {usernameChangedHandler}/>
+                </div>
 
-            <div className = {styles.loginField}>
-                <label>Username</label>
-                <input type = 'text' onChange = {usernameChangedHandler}/>
-            </div>
+                <div className = {styles.loginField}>
+                    <label>Password</label>
+                    <input type = 'password' onChange = {passwordChangedHandler}/>
+                </div>
+                <Link className = {styles.forgotPassword} to = "/ForgotPassword">Forgot Password?</Link>
+                <Link className = {styles.registerLink} to = "/Registration">or Register Here...</Link>
+                <sub>{statusMessage}</sub>
+            
+                <hr/>
+            </>: null}
 
-            <div className = {styles.loginField}>
-                <label>Password</label>
-                <input type = 'password' onChange = {passwordChangedHandler}/>
-            </div>
-            <Link className = {styles.forgotPassword} to = "/ForgotPassword">Forgot Password?</Link>
-            <Link className = {styles.registerLink} to = "/Registration">or Register Here...</Link>
-            <sub>{statusMessage}</sub>
+            
+            {!isLoggedIn?
+            <button onClick = {loginHandler}>Login</button>:
+            <button onClick = {logoutHandler}>Logout</button>
+            }
 
-            <hr/>
-            <button onClick = {loginHandler}>Login</button>
             
         </div>
     );

@@ -1,0 +1,33 @@
+.UserProfileContainer
+{
+    margin: 2em;
+    padding: 2em;
+    background-color: white;
+    width: 600px;
+    box-shadow: 5px 5px 15px black;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+
+    align-items: flex-start;
+
+    button
+    {
+        color: white;
+        background-color: black;
+    }
+
+    .Field, .InputField
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        text-align: right;
+
+        label
+        {
+            width: 150px;
+            padding-right: 20px;
+        }
+    }
+}

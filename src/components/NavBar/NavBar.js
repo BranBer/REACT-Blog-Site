@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
@@ -66,14 +66,36 @@ const StyledLink = styled(Link)`
 
 const NavBar = (props) => 
 {
+
+    const [isLoggedIn, updateIsLoggedIn] = useState((sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null')?true:false);
+
+    useEffect(() =>
+    {
+        let token = sessionStorage.getItem('token');
+        
+        if(token !== null && token !== 'null')
+        {
+            updateIsLoggedIn(true);
+            console.log('true');
+        }
+        else
+        {
+            updateIsLoggedIn(false);
+            console.log('false');
+        }
+    }, []);
+
+    let userPortal = isLoggedIn?"/Login":"/Profile";
+    //♛
     return (
         <NavSection current = { props.currentContent }>            
                 <li><StyledLink to = "/">Home</StyledLink></li>
                 <li><StyledLink to = "/BlogPosts">Blog</StyledLink></li>
                 <li><StyledLink to = "/BlogPostsByYou">Blog by You</StyledLink></li>
                 <li><StyledLink to = "/Submit">Submit</StyledLink></li>
-                <li><StyledLink to = "/About">About</StyledLink></li>
-                <li><StyledLink to = "/Login">♛</StyledLink></li>
+                <li><StyledLink to = "/About">About</StyledLink></li>                
+                <li><StyledLink to = "/Login">Login</StyledLink></li>
+                <li><StyledLink to = "/Profile">Profile</StyledLink></li>
         </NavSection>
     );
 }

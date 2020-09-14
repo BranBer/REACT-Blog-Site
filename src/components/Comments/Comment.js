@@ -21,7 +21,7 @@ const Comment = (props) =>
                     <Comment key = {'comment' + object.id.toString()}
                              comment_id = {object.id}
                              comment = {object.comment} 
-                             author = {object.username}
+                             author = {object.display_name}
                              date = {object.date_posted}
                              votes = {object.net_votes}
                              reloadComments = {props.reloadComments}

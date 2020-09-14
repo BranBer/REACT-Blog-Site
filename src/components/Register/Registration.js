@@ -17,6 +17,22 @@ const Registration = (props) =>
         dob: ''
     })
 
+    // useEffect(() =>
+    // {
+    //     let token = sessionStorage.getItem('token');
+    //     console.log(token);
+    //     console.log('asd');
+    //     //User cannot register if they are already logged in
+    //     if(token !== 'null' && token !== null)
+    //     {
+    //         updateShowRegistration(false);
+    //     }
+    //     else
+    //     {
+    //         updateShowRegistration(true);
+    //     }
+    // });
+
     const handleEmailChange = (event) =>
     {
         let myFields = registrationFields;

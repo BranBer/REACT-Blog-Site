@@ -75,7 +75,7 @@ const CommentsSection = (props) => {
             <Comment key = {'comment' + object[1].id.toString()}
                      comment_id = {object[1].id}
                      comment = {object[1].comment} 
-                     author = {object[1].username}
+                     author = {object[1].display_name}
                      date = {object[1].date_posted}
                      votes = {object[1].net_votes}
                      replies = {object[1].reply}
