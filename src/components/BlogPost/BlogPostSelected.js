@@ -15,11 +15,8 @@ const BlogPostSelected = (props) =>
     {
         let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + props.match.params.id + '/';
 
-        let mounted = true; 
         axios.get(url)
         .then(response => {
-            if(mounted)
-            {
                 let data = response.data;
                 let date = new Date(data['date']);
                 
@@ -27,10 +24,7 @@ const BlogPostSelected = (props) =>
 
                 
                 UpdateSelectedPostData({data: data});
-            }
         });
-
-        return () => mounted = false;
     }, []);
 
     return (
@@ -42,9 +36,11 @@ const BlogPostSelected = (props) =>
                     <div className = {styles.SelectedPost}>
                         <h1>{SelectedPostData.data[0].post_title}</h1>
 
+                        {SelectedPostData.data[0].images.length > 0?
                         <div className = {styles.PostGalleryImage}>
                             <GalleryImage images = {SelectedPostData.data[0].images}/>
-                        </div>
+                        </div>: null
+                        }
 
                         <br/>
                         <div dangerouslySetInnerHTML={{__html: SelectedPostData.data[0].post_content }}/>       

@@ -12,16 +12,18 @@ const BlogPost = (props) =>
     const PostContext = useContext(SelectedPostContext);
     const ToUrl = props.title + date.toString();
 
+
+    //console.log(img);
+
     // useEffect(() => {
-    //     console.log(props);
-    // });
+    // }, []);
 
     return (
         <div className = {styles.BlogPostContainer}>            
             <h1>{props.title}</h1>
             <div className = {styles.BlogPost}>
                 <div className = {styles.PostHeader}>
-                    <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>
+                    {props.images[0] !== undefined?<img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>:null}
                     <sub>{props.author}</sub>
                     <br/>
                     <sub>{formattedDate}</sub>
