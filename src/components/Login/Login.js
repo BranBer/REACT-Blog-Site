@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './Login.module.scss';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
+import {GeneralContext} from '../GeneralContext';
 
 const Login = (props) =>
 {
@@ -11,6 +12,8 @@ const Login = (props) =>
         username: '',
         password: ''
     });
+
+    let myContext = useContext(GeneralContext);
 
     const loginHandler = () =>
     {
@@ -33,7 +36,8 @@ const Login = (props) =>
                 response =>
                 {
                     sessionStorage.setItem('token', response.data["token"]);
-                    updateStatusMessage('Successfully Logged in as ' + response.data["username"]);
+                    updateStatusMessage('Successfully Logged in as ' + response.data["username"]);          
+                    myContext.executeLoadFunction();
                 }
             )
             .catch(
@@ -50,6 +54,7 @@ const Login = (props) =>
     {
         sessionStorage.setItem('token', null);
         updateIsLoggedIn(false);
+        myContext.executeLoadFunction();
     }
 
     const usernameChangedHandler = (event) =>
@@ -107,6 +112,10 @@ const Login = (props) =>
             {!isLoggedIn?
             <button onClick = {loginHandler}>Login</button>:
             <button onClick = {logoutHandler}>Logout</button>
+            }
+
+            {isLoggedIn?
+            <Redirect to = "/Profile"/>: null
             }
 
             

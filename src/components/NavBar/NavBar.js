@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
-
+import {GeneralContext} from '../GeneralContext';
+import axios from 'axios';
 import {BrowserRouter, Link, Switch, Route} from 'react-router-dom';
 
 import AboutPage from '../../pages/AboutPage';
@@ -68,22 +69,60 @@ const NavBar = (props) =>
 {
 
     const [isLoggedIn, updateIsLoggedIn] = useState((sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null')?true:false);
+    const [profileLabel, updateProfileLabel] = useState('Profile');
+    let myContext = useContext(GeneralContext);
 
-    useEffect(() =>
+    const getUserDisplayName = () =>
+    {
+                //Retrieve User display name for profile nav bar option
+                let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/GetUser/';
+                let config = {
+                    headers: {
+                        'Authorization': 'Token ' + sessionStorage.getItem('token')
+                    }
+                };
+        
+                axios.get(url, config)
+                .then(
+                    response =>
+                    {
+                        console.log(response.data.display_name);
+                        updateProfileLabel(response.data.display_name);
+                    }
+                )
+                .catch(
+                    err =>
+                    {
+                        updateProfileLabel('Profile');
+                    }
+                )
+    }
+
+
+    const updateLogin = () =>
     {
         let token = sessionStorage.getItem('token');
         
         if(token !== null && token !== 'null')
         {
+            getUserDisplayName();
             updateIsLoggedIn(true);
-            console.log('true');
         }
         else
         {
             updateIsLoggedIn(false);
-            console.log('false');
         }
+    }
+
+    useEffect(() =>
+    {
+        updateLogin();
+        myContext.loadFunction(updateLogin);
+
+        getUserDisplayName();
     }, []);
+
+
 
     let userPortal = isLoggedIn?"/Login":"/Profile";
     //♛
@@ -94,8 +133,8 @@ const NavBar = (props) =>
                 <li><StyledLink to = "/BlogPostsByYou">Blog by You</StyledLink></li>
                 <li><StyledLink to = "/Submit">Submit</StyledLink></li>
                 <li><StyledLink to = "/About">About</StyledLink></li>                
-                <li><StyledLink to = "/Login">Login</StyledLink></li>
-                <li><StyledLink to = "/Profile">Profile</StyledLink></li>
+                {!isLoggedIn?<li><StyledLink to = "/Login">Login</StyledLink></li>:null}
+                {isLoggedIn?<li><StyledLink to = "/Profile">{profileLabel}</StyledLink></li>:null}
         </NavSection>
     );
 }

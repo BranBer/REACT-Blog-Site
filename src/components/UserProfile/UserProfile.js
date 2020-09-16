@@ -9,6 +9,7 @@ const UserProfile = () =>
     const [fields, updateFields] = useState({
         displayName: '',
         email: '',
+        authCode: '',
     });
     
     const [userInfo, updateUserInfo] = useState(
@@ -18,6 +19,8 @@ const UserProfile = () =>
             email: '',
         }
     );
+
+    const[showEmailInputFields, updateShowEmailInputFields] = useState(false);
 
     const pullUserInfo = () =>
     {
@@ -59,7 +62,6 @@ const UserProfile = () =>
         pullUserInfo();
     }, []);
 
-
     const handleDisplayNameChange = (event) =>
     {
         let myFields = fields;
@@ -71,6 +73,13 @@ const UserProfile = () =>
     {
         let myFields = fields;
         myFields.email = event.target.value;
+        updateFields(myFields);
+    }
+
+    const handleAuthCodeChange = (event) =>
+    {
+        let myFields = fields;
+        myFields.authCode = event.target.value;
         updateFields(myFields);
     }
 
@@ -103,8 +112,23 @@ const UserProfile = () =>
             .then(
                 response =>
                 {
-                    updateStatusMessage('Profile Updated');
+                    if(fields.displayName !== '')
+                    {
+                        updateStatusMessage('Profile Updated');
+                    }
+
                     pullUserInfo();
+                    
+                    //Show email verification form if user wants to change email
+                    if(fields.email !== '')
+                    {
+                        updateShowEmailInputFields(true);
+                        updateStatusMessage('Code Sent');
+                    }
+                    else
+                    {
+                        updateShowEmailInputFields(false);  
+                    }
                 }
             )
             .catch(
@@ -118,6 +142,45 @@ const UserProfile = () =>
         {
             console.log('Login or Register First');
         }
+    }
+
+    const verifyNewEmail = () =>
+    {
+        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/VerifyNewEmail/';
+            
+        let body = new FormData();
+        
+        if(fields.authCode !== '')
+        {
+            body.append('code', fields.authCode);
+        }
+
+        let config = {
+            headers: 
+            {
+                'Authorization': 'Token ' + sessionStorage.getItem('token')
+            }
+        };
+
+        axios.post(url, body, config)
+        .then(
+            response =>
+            {
+                updateStatusMessage('Email Updated');
+                pullUserInfo();
+                
+                //There is no longer a need to show this form
+                updateShowEmailInputFields(false);
+            }
+        )
+        .catch(
+            err =>
+            {
+                updateStatusMessage('Something went wrong');
+
+                updateShowEmailInputFields(true);     
+            }
+        );
     }
     
     return (
@@ -149,9 +212,25 @@ const UserProfile = () =>
 
                     <div className = {styles.InputField}>
                         <label>New Email: </label>
-                        <input type = "text" onChange = {handleEmailChange}></input>
+                        <input type = "text" onChange = {handleEmailChange}></input>     
                     </div>
 
+                    {showEmailInputFields?
+                        <>
+                            <div className = {styles.InputField}>
+                                <label>Auth Code: </label>
+                                <input type = "text" onChange = {handleAuthCodeChange} maxLength = '6'/>
+                                <button onClick = {verifyNewEmail}>Update Email</button>
+                            </div>
+                            <sub>A code has been sent to your new email. Please enter the correct code then click update email.</sub>
+                            <sub>If you do not verify your email, your email won't be changed..</sub>
+                        </>
+                        :null
+                    }
+
+                    <sub style = {{color: 'green'}}>{statusMessage}</sub>
+                        
+                    
                     <button onClick = {updateProfile}>Save Changes</button>
                 </>:
                 <p>Login or Register First</p>}
