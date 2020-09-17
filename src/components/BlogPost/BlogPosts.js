@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import BlogPost from './BlogPost';
 import styles from './BlogPosts.module.scss';
+import { GeneralContext } from '../GeneralContext';
 
 const BlogPosts = (props) =>
 {
@@ -12,10 +13,12 @@ const BlogPosts = (props) =>
     
     const postsPerPage = 4;
 
+    let myContext = useContext(GeneralContext);
+
     useEffect( () => {
         let mounted = true;
 
-        axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ postsPerPage + '/')
+        axios.get(myContext.value.url + '/posts/' + PostData.position + '/'+ postsPerPage + '/')
         .then(response => {
             
             if(mounted)

@@ -9,41 +9,63 @@ import {GeneralContext} from '../components/GeneralContext';
 const AdminPage = () =>
 {
     const myContext = useContext(GeneralContext);
+    let url = myContext.value.url;
 
     const [showLogin, updateShowLogin] = useState(sessionStorage.getItem('token') !== 'null' && sessionStorage.getItem('token') !== null);
     
+    const [isAdmin, updateIsAdmin] = useState(false);
+
     const [Credentials, UpdateCredentials] = useState({username: '', password: ''});
 
     const [loginStatusMsg, updateLoginStatus] = useState("");
 
+
     const [showManagers, toggleManagers] = useState(false);
 
 
+    const isAdminAcount = () =>
+    {
+        const token = sessionStorage.getItem('token');
+
+        let config = {
+            headers: {
+                Authorization: 'Token ' + token
+            }
+        };
+
+        if(token !== 'null' && token !== null)
+        {
+            axios.get(url + '/User/IsSuperUser/', config)
+            .then(
+                response =>
+                {
+                    if(response.data == true)
+                    {
+                        updateLoginStatus("Login Success");
+                        updateShowLogin(false);
+                    }
+                    else
+                    {
+                        updateLoginStatus('This account is not authorized...');
+                    }
+                }
+            )
+            .catch(
+                err =>
+                {
+                }
+            );
+        }
+        else
+        {
+            updateShowLogin(true);
+        }
+    }
+
     useEffect(() => 
     {
-        let mounted = true;
-        if(mounted)
-        {
-            const token = sessionStorage.getItem('token');
-
-
-            if(token == 'null' || token == null)
-            {
-                console.log(token);
-
-                updateShowLogin(true);
-            }
-            else
-            {
-                updateShowLogin(false);
-            }
-
-            
-            console.log('logged in status ' + showLogin.toString());
-        }
-
-        return () => mounted = false;
-    });
+        isAdminAcount();             
+    }, []);
 
     const loginHandler = () =>
     {
@@ -73,9 +95,7 @@ const AdminPage = () =>
 
             if (response.status == 200)
             {
-                updateLoginStatus("Login Success");
-                updateShowLogin(true);
-                console.log('Logged In');
+                isAdminAcount();
             }
         })
         .catch(err => updateLoginStatus("Invalid Credentials"));
@@ -98,7 +118,8 @@ const AdminPage = () =>
     const logoutHandler = () =>
     {        
         sessionStorage.setItem('token', 'null');
-        updateShowLogin(true);
+        isAdminAcount();
+        //updateShowLogin(true);
     }
 
     return (

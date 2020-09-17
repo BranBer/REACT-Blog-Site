@@ -86,7 +86,6 @@ const NavBar = (props) =>
                 .then(
                     response =>
                     {
-                        console.log(response.data.display_name);
                         updateProfileLabel(response.data.display_name);
                     }
                 )

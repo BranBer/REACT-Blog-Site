@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './ByYouPanel.module.scss';
 import ByYouPost from './ByYouPost';
 import axios from 'axios';
+import { GeneralContext } from '../GeneralContext';
 
 const ByYouPanel = () =>
 {
@@ -12,9 +13,11 @@ const ByYouPanel = () =>
         position: 0
     });
 
+    let myContext = useContext(GeneralContext);
+
     useEffect(()=>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/' + PostData.position + '/' + postsPerPage + '/';
+        let url = myContext.value.url + '/posts/ByYou/' + PostData.position + '/' + postsPerPage + '/';
         let mounted = true;
 
 
@@ -51,7 +54,7 @@ const ByYouPanel = () =>
     
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
+            let url = myContext.value.url + '/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
             axios.get(url)
             .then((response) => {
                 let newPos = PostData.position;
@@ -86,7 +89,7 @@ const ByYouPanel = () =>
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
+            let url = myContext.value.url + '/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
             axios.get(url, {})
             .then((response) => {
                 let myPosts = PostData;

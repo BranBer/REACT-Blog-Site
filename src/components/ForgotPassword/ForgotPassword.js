@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import axios from 'axios';
 import styles from './ForgotPassword.module.scss';
 import {Redirect} from 'react-router-dom';
+import { GeneralContext } from '../GeneralContext';
 
 const ForgotPassword = (props) =>
 {
@@ -10,6 +11,8 @@ const ForgotPassword = (props) =>
     const [fields, updateFields] = useState({
         email: ''
     });
+    
+    let myContext = useContext(GeneralContext);
 
     const handleEmailChange = (event) =>
     {
@@ -22,7 +25,7 @@ const ForgotPassword = (props) =>
     {
         if (fields.email !== '')
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/ForgotPassword/';
+            let url = myContext.value.url + '/User/ForgotPassword/';
             
             let body = new FormData();
             body.append('email', fields.email);

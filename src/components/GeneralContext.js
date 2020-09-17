@@ -9,7 +9,8 @@ const GeneralContextProvider = (props) =>
         token: sessionStorage.getItem('token'),
         isSuperUser: false,
         isLoggedIn: sessionStorage.getItem('token')!==null && sessionStorage.getItem('token')!=='null',
-        updateLoginFunction: null
+        updateLoginFunction: null,
+        url: 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com'
     });
 
     useEffect(()=>{

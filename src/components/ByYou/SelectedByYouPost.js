@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './SelectedByYouPost.module.scss';
 import axios from 'axios';
 import CommentsSection from '../Comments/CommentsSection';
 import {useHistory} from 'react-router-dom';
+import { GeneralContext } from '../GeneralContext';
 
 const SelectedByYouPost = (props) =>
 {
@@ -10,10 +11,12 @@ const SelectedByYouPost = (props) =>
     const [ByYouPostData, UpdateByYouPostData] = useState(null);
     let history = useHistory();
 
+    let myContext = useContext(GeneralContext);
+
     useEffect(() =>
     {
         let mounted = true;
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + id + '/'
+        let url = myContext.value.url + '/posts/' + id + '/'
         
         axios.get(url)
         .then(response => {

@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './CommentsSection.module.scss';
 import axios from 'axios';
 import Comment from './Comment';
+import { GeneralContext } from '../GeneralContext';
 
 const CommentsSection = (props) => {
     const [comments, updateComments] = useState({});
@@ -10,9 +11,11 @@ const CommentsSection = (props) => {
 
     const [statusMessage, updateStatusMessage] = useState('');
 
+
+    let myContext = useContext(GeneralContext);
     const getComments = () =>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/comments/' + props.post_id + '/';
+        let url = myContext.value.url + '/posts/comments/' + props.post_id + '/';
         
         //Gets the comments
         axios.get(url)
@@ -40,7 +43,7 @@ const CommentsSection = (props) => {
 
         if(commentSubmission !== '' && (token !== null && token !== 'null'))
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/comment/';
+            let url = myContext.value.url + '/create/comment/';
             
             let form_data = new FormData();
             form_data.append('id', props.post_id);

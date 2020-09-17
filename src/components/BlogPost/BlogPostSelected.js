@@ -1,19 +1,21 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import styles from './BlogPostSelected.module.scss';
 import {useHistory} from 'react-router-dom';
 import CommentsSection from '../Comments/CommentsSection';
+import { GeneralContext } from '../GeneralContext';
 
 const BlogPostSelected = (props) =>
 {
     const [SelectedPostData, UpdateSelectedPostData] = useState({data: null});
 
     let history = useHistory();
+    let myContext = useContext(GeneralContext);
 
     useEffect(()=>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + props.match.params.id + '/';
+        let url = myContext.value.url + '/posts/' + props.match.params.id + '/';
 
         axios.get(url)
         .then(response => {

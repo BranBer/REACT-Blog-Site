@@ -4,11 +4,13 @@ import styles from './BlogPost.module.scss';
 
 import {Link} from 'react-router-dom';
 import { SelectedPostContext } from './SelectedPostContext';
+import { GeneralContext } from '../GeneralContext';
 
 const BlogPost = (props) =>
 {
     const date = new Date(props.date);
     const formattedDate = date.toLocaleString();
+    const myContext = useContext(GeneralContext);
     const PostContext = useContext(SelectedPostContext);
     const ToUrl = props.title + date.toString();
 
@@ -23,7 +25,7 @@ const BlogPost = (props) =>
             <h1>{props.title}</h1>
             <div className = {styles.BlogPost}>
                 <div className = {styles.PostHeader}>
-                    {props.images[0] !== undefined?<img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>:null}
+                    {props.images[0] !== undefined?<img src = {myContext.value.url + '/media/' + props.images[0]}/>:null}
                     <sub>{props.author}</sub>
                     <br/>
                     <sub>{formattedDate}</sub>
@@ -44,18 +46,6 @@ const BlogPost = (props) =>
         </div>
     );
 }
-
-/*
-
-        <div className = {styles.BlogPost}>
-            <h3>{props.title}</h3>
-            <sub>{props.author}</sub>
-            <sub>{props.date}</sub>
-            <hr/>
-            <div dangerouslySetInnerHTML = {{__html: props.content }}/>
-            <GalleryImage images = {props.images}/>  
-        </div>
-*/
 
 
 export default BlogPost;
