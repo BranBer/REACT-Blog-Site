@@ -9,10 +9,10 @@ const ImageExpander = styled.div`
     display: flex;
     flex-direction: column;
 
-    background-image: linear-gradient(to right,#DAD3FF, rgba(0, 0, 0, 0.0));
+    background-image: linear-gradient(to right, darkgray, rgba(0, 0, 0, 0.0));
     padding: 10px;
     border-radius: 50px;
-    min-width: 90%;
+    width: 100%;
     margin-bottom: 20px;
 
     button

@@ -9,9 +9,16 @@
 
     width: 60%;
     height: auto;
-    background-color: #4D457A;
+    background-color: white;
 
-    color:white;
+    color:black;
+
+    button
+    {
+        color: white;
+        background-color: black;
+        margin: 1em;
+    }
 
     h2
     {
@@ -52,10 +59,5 @@
         {
             outline: none;
         }
-    }
-
-    button
-    {
-        margin: 1em;
     }
 }

@@ -12,6 +12,8 @@
 
     padding: 1em;
     margin-bottom: 1em;
+    border: 1px solid darkgray;
+
     hr
     {
         width: 75%;
@@ -22,10 +24,9 @@
         height: 200px;
 
         overflow: scroll;
-        border-radius: 50px;
         padding: 1em;
 
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid darkgray;
     }
 
     button

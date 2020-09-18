@@ -45,7 +45,7 @@ const NavSection = styled.ul`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-    color: white;
+    color: black;
 
     &:hover
     {
@@ -67,7 +67,6 @@ const StyledLink = styled(Link)`
 
 const NavBar = (props) => 
 {
-
     const [isLoggedIn, updateIsLoggedIn] = useState((sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null')?true:false);
     const [profileLabel, updateProfileLabel] = useState('Profile');
     let myContext = useContext(GeneralContext);
@@ -75,7 +74,7 @@ const NavBar = (props) =>
     const getUserDisplayName = () =>
     {
                 //Retrieve User display name for profile nav bar option
-                let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/GetUser/';
+                let url = myContext.value.url + '/User/GetUser/';
                 let config = {
                     headers: {
                         'Authorization': 'Token ' + sessionStorage.getItem('token')
@@ -96,7 +95,6 @@ const NavBar = (props) =>
                     }
                 )
     }
-
 
     const updateLogin = () =>
     {

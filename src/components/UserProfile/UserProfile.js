@@ -1,9 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './UserProfile.module.scss';
 import axios from 'axios';
+import { GeneralContext } from '../GeneralContext';
+import { Redirect } from 'react-router-dom';
 
 const UserProfile = () =>
 {
+    let myContext = useContext(GeneralContext);
+
     const [statusMessage, updateStatusMessage] = useState('');
     const [showProfile, updateShowProfile] = useState(sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null');
     const [fields, updateFields] = useState({
@@ -87,7 +91,7 @@ const UserProfile = () =>
     {
         if(showProfile)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/Update/';
+            let url = myContext.value.url + '/User/Update/';
             
             let body = new FormData();
             
@@ -146,7 +150,7 @@ const UserProfile = () =>
 
     const verifyNewEmail = () =>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/VerifyNewEmail/';
+        let url = myContext.value.url + '/User/VerifyNewEmail/';
             
         let body = new FormData();
         
@@ -183,6 +187,13 @@ const UserProfile = () =>
         );
     }
     
+    const logoutHandler = () =>
+    {
+        sessionStorage.setItem('token', null);
+        myContext.executeLoadFunction();
+        updateShowProfile(false);
+    }
+
     return (
         <>
             <div className = {styles.UserProfileContainer}>
@@ -232,8 +243,9 @@ const UserProfile = () =>
                         
                     
                     <button onClick = {updateProfile}>Save Changes</button>
+                    <button onClick = {logoutHandler} className = {styles.LogoutButton}>Logout</button>
                 </>:
-                <p>Login or Register First</p>}
+                <Redirect to ="Login"/>}
             </div>
         </>
     );

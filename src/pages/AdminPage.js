@@ -144,8 +144,12 @@ const AdminPage = () =>
                 <sub>{loginStatusMsg}</sub>
             </div>: 
             <div className = {styles.AdminPageContainer}>
-                <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
-                <button onClick = {() => toggleManagers(!showManagers)} className = {styles.toggleManagerButton}>{showManagers?'Create Blog Posts':'Manage Blog Posts'}</button>
+                <div className = {styles.AdminNav}>
+                    <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
+                    <button onClick = {() => toggleManagers(!showManagers)} className = {styles.toggleManagerButton}>{showManagers?'Create Blog Posts':'Manage Blog Posts'}</button>
+                    <button>Comment Manager</button>
+                    <button>User Manager</button>
+                </div>
                 <div className = {styles.BlogPanelsContainer}>
                     {showManagers == false?<div>
                         <SubmissionForm/>

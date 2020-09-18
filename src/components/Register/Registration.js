@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styles from './Registration.module.scss';
 import axios from 'axios';
 import {Redirect} from 'react-router-dom';
+import { GeneralContext } from '../GeneralContext';
 
 const Registration = (props) =>
 {
@@ -17,21 +18,7 @@ const Registration = (props) =>
         dob: ''
     })
 
-    // useEffect(() =>
-    // {
-    //     let token = sessionStorage.getItem('token');
-    //     console.log(token);
-    //     console.log('asd');
-    //     //User cannot register if they are already logged in
-    //     if(token !== 'null' && token !== null)
-    //     {
-    //         updateShowRegistration(false);
-    //     }
-    //     else
-    //     {
-    //         updateShowRegistration(true);
-    //     }
-    // });
+    let myContext = useContext(GeneralContext);
 
     const handleEmailChange = (event) =>
     {
@@ -134,7 +121,7 @@ const Registration = (props) =>
     {
         if(validateRegistrationFields())
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/Register/SendCode/';
+            let url = myContext.value.url + '/Register/SendCode/';
 
             let config = {
                 headers: {
@@ -170,7 +157,7 @@ const Registration = (props) =>
     {
         if(confirmationCode !== '' && confirmationCode.length == 6)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/Register/Authorize/';
+            let url = myContext.value.url + '/Register/Authorize/';
 
             let config = {
                 headers: {

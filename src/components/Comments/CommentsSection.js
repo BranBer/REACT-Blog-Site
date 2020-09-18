@@ -59,14 +59,13 @@ const CommentsSection = (props) => {
             axios.post(url, form_data, config)
             .then(response => 
                 {
-                    console.log('Successfully commented on post with an id of ' + props.post_id + ".");
                     getComments();
                     updateStatusMessage('Successfully Commented!');
                 })
             .catch(
                 err =>
                 {
-                    console.log("Something went wrong");
+                    updateStatusMessage('Users can only comment once per post and reply once per comment..');
                 }
             );
         }
@@ -83,7 +82,9 @@ const CommentsSection = (props) => {
                      votes = {object[1].net_votes}
                      replies = {object[1].reply}
                      reloadComments = {getComments}
-                     replyLength = {object[1].reply.length - 1}/>
+                     replyLength = {object[1].reply.length - 1}
+                     showDelete = {false}
+                     />
                      
         );
     });

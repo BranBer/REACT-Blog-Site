@@ -13,8 +13,10 @@ const SiteLogo = styled.img`
     margin: 10px 0px 0px 10px;
 `;
 
+//purple color: #4D457A
+
 const HeaderDiv = styled.div`
-    background-color: #4D457A;
+    background-color: white;
     height: 225px;
     width: 100%;
     min-width: 1000px;

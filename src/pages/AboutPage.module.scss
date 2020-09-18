@@ -14,11 +14,11 @@
     align-items: center;
 
     margin: 5em;
-    background-color: #4D457A;
+    background-color: white;
     width: 50em;
     height: 50em;
 
-    border: 10px solid #4D457A;
+    border: 10px solid white;
     border-radius: 50px 5px 50px 5px;
 
 }
@@ -26,9 +26,9 @@
 .aboutpage-content h2
 {
     text-align: center;
-    color: white;
+    color: black;
     font-size: 36px;
-    font-family: "Marck Script";
+    font-family: "Roboto";
 }
 
 .aboutpage-content hr
@@ -52,15 +52,16 @@
     height: 24em;   
     margin: 20px;
 
-    border: 5px solid white;
+    border: 5px solid black;
     border-radius: 25px;
+    background-color: black;
 }
 
 .aboutpage-content-about p
 {
     font-size: 14px;
     margin-left: 10px;
-    color:white;
+    color:black;
     font-family: "roboto";
     min-height: 600px;
     height: 60%;

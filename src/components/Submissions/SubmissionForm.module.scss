@@ -12,12 +12,12 @@ button:focus
 {
         display: flex;
         flex-direction: column;
-        background-color: #4D457A;
+        background-color: white;
         width: 100%;
         margin: 2em;
         margin-top: 1em;
 
-        border: 1px solid #4D457A;
+        border: 1px solid white;
         border-radius: 50px;
 }
 
@@ -46,7 +46,7 @@ button:focus
 
 .submission input[type=text]
 {
-        border: none;
+        border: 1px solid darkgray;
         border-radius: 20px;
         padding: 5px;
         width: 30%;

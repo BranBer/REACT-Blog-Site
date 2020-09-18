@@ -4,22 +4,23 @@
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    color: white;
+    color: black;
     font-family: "marck script";
     font-size: 24px;
 
     button
     {
-        color: white;
+        color: black;
         background-color: transparent;
         padding: 5px 10px 5px 10px;
         border-radius: 50px;
         border: none;
         font-size: 24px;
+        transition: font-size 1s ease-in-out;
 
         &:hover
         {
-            color: lightblue;
+            font-size: 30px;
         }
     }
 }
@@ -31,6 +32,7 @@
     align-items: flex-start;
 
     background-color: white;
+    border: 1px solid darkgray;
     height: 7em;
     width: 90%;
     padding: 2em;
@@ -63,7 +65,7 @@
     padding: 2em;
     row-gap: 1em;
     width: 50%;
-    background-color: #4D457A;
+    background-color: white;
 
     border-radius: 50px;
     margin-right: 1em;

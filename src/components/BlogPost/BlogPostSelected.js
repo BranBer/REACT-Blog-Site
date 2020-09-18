@@ -63,7 +63,8 @@ const BlogPostSelected = (props) =>
             SelectedPostData.data !== null?
             <div className = {styles.CommentsSectionContainer}>
                 <h2>Comments</h2>
-                <CommentsSection post_id = {SelectedPostData.data[0].id}/>
+                <CommentsSection post_id = {SelectedPostData.data[0].id}
+                />
             </div>
             :null
         }

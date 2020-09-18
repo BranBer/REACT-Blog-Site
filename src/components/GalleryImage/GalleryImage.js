@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import {CSSTransition} from 'react-transition-group';
+import { generatePath } from 'react-router-dom';
+import {GeneralContext} from '../GeneralContext';
 
 const Gallery = styled.div`    
     display: flex;
@@ -69,8 +71,10 @@ const Gallery = styled.div`
 
 const GalleryImage = (props) =>
 {
-    let srcUrl = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/';
+    let myContext = useContext(GeneralContext);
 
+    let srcUrl = myContext.value.url + '/media/';
+    
     const [postImages, updatePostImages] = useState(
         {
         images: props.images,

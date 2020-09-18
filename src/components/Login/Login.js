@@ -37,6 +37,7 @@ const Login = (props) =>
                 {
                     sessionStorage.setItem('token', response.data["token"]);
                     updateStatusMessage('Successfully Logged in as ' + response.data["username"]);          
+                    updateIsLoggedIn(true);
                     myContext.executeLoadFunction();
                 }
             )

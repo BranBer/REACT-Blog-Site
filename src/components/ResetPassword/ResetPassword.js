@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import styles from '../ForgotPassword/ForgotPassword.module.scss';
 import {Link, useHistory} from 'react-router-dom';
+import { GeneralContext } from '../GeneralContext';
 
 const ResetPassword = (props) =>
 {
@@ -12,6 +13,8 @@ const ResetPassword = (props) =>
         password: '',
         password2: ''
     });
+
+    let myContext = useContext(GeneralContext);
 
     let history = useHistory();
 
@@ -58,7 +61,7 @@ const ResetPassword = (props) =>
     {
         if (fields.password == fields.password2)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/ChangePassword/';
+            let url = myContext.value.url + '/User/ChangePassword/';
             
             let body = new FormData();
             body.append('code', fields.code);

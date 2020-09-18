@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import AddImage from './AddImage';
 import base64Stringtofile from './stringToFile';
 import axios from 'axios';
 import Editor from './Editor';
 import styles from './SubmissionForm.module.scss'
+import { GeneralContext } from '../GeneralContext';
 
 const SubmissionForm = (props) =>
 {
@@ -15,6 +16,8 @@ const SubmissionForm = (props) =>
         author: null,
         date: null
     });
+
+    let myContext = useContext(GeneralContext);
 
     useEffect(() =>
     {
@@ -93,7 +96,7 @@ const SubmissionForm = (props) =>
     {
         let data = postData;
 
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/';
+        let url = myContext.value.url + '/create/';
 
         let form_data = new FormData();
         let dataEntries = Object.entries(data);

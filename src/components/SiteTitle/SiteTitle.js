@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import NavBar from '../NavBar/NavBar'
 
+
+//light purple: #DAD3FF
 const StyledTitleDiv = styled.div`
         font-family: 'Roboto';
         font-size: 36px;
         min-width: 750px;
-        color: #DAD3FF;
+        color: black;
         overflow:hidden;
         position: relative;
         float: left;

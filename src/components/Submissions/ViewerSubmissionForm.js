@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styles from './ViewerSubmissionForm.module.scss';
 import axios from 'axios';
+import { GeneralContext } from '../GeneralContext';
 
 const ViewerSubmissionForm = (props) =>
 {
+    let myContext = useContext(GeneralContext);
+
     const [postData, updatePostData] = useState({
         post_title: '',
         author: 'anonymous',
@@ -36,7 +39,7 @@ const ViewerSubmissionForm = (props) =>
     const submitPost = () =>
     {
         let myPostData = Object.entries(postData);
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/create/ByYou/';
+        let url = myContext.value.url + '/create/ByYou/';
         let body = new FormData();
 
         let config = {

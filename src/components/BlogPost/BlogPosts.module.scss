@@ -17,12 +17,14 @@
         button
         {
             background-color: transparent;
-            color: white;
+            color: black;
             font-size: 24px;
+
+            transition: font-size 1s ease-in-out;
 
             &:hover
             {
-                color: lightblue;
+                font-size: 30px;
             }
         }
     }
