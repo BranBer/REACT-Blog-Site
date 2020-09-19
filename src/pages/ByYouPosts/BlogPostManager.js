@@ -1,22 +1,25 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import styles from './BlogPostManager.module.scss';
 import BlogPostManageable from './BlogPostManageable';
+import { GeneralContext } from '../../components/GeneralContext';
 
 const BlogPostManager = (props) => 
 {
     const [PostData, updatePostData] = useState({data: {},
         position: 0});
 
-        const postsPerPage = 4;
+    const postsPerPage = 4;
 
+    let myContext = useContext(GeneralContext);
+    let myUrl = myContext.value.url;
     useEffect( () => {
         let mounted = true;
         const token = sessionStorage.getItem('token');        
         
         if(token !== null)
         {
-            axios.get('http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/' + PostData.position + '/'+ postsPerPage + '/')
+            axios.get(myUrl + '/posts/' + PostData.position + '/'+ postsPerPage + '/')
             .then(response => {
                 if(mounted)
                 {
@@ -41,7 +44,7 @@ const BlogPostManager = (props) =>
     
         if(token !== null && token !== 'null')
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/'+ PostData.position + '/' + postsPerPage + '/';
+            let url = myUrl + '/posts/'+ PostData.position + '/' + postsPerPage + '/';
             axios.get(url)
             .then((response) => {
                 let newPos = PostData.position;
@@ -77,7 +80,7 @@ const BlogPostManager = (props) =>
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/'+ PostData.position + '/' + postsPerPage + '/';
+            let url = myUrl + '/posts/'+ PostData.position + '/' + postsPerPage + '/';
             axios.get(url, {})
             .then((response) => {
                 let myPosts = PostData;

@@ -4,6 +4,7 @@ import styles from './AdminPage.module.scss';
 import BlogPostByYouManager from './ByYouPosts/BlogPostByYouManager';
 import BlogPostManager from './ByYouPosts/BlogPostManager';
 import SubmissionForm from '../components/Submissions/SubmissionForm';
+import CommentUserManager from '../components/CommentUserManager/CommentUserManager';
 import {GeneralContext} from '../components/GeneralContext';
 
 const AdminPage = () =>
@@ -21,7 +22,9 @@ const AdminPage = () =>
 
 
     const [showManagers, toggleManagers] = useState(false);
-
+    const [showCommentUserManager, toggleCommentUserManager] = useState(false);
+    const [showSubmission, toggleSubmission] = useState(false);
+    
 
     const isAdminAcount = () =>
     {
@@ -115,6 +118,36 @@ const AdminPage = () =>
         UpdateCredentials(myCred);
     }
 
+    const handlePostManagerChange = () =>
+    {
+        if(showLogin == false)
+        {
+            toggleManagers(true);
+            toggleCommentUserManager(false);
+            toggleSubmission(false);
+        }
+    }
+
+    const handleCommentUserManagerChange = () =>
+    {
+        if(showLogin == false)
+        {
+            toggleManagers(false);
+            toggleCommentUserManager(true);
+            toggleSubmission(false);
+        }
+    }
+
+    const handleSubmissionManagerChange = () =>
+    {
+        if(showLogin == false)
+        {
+            toggleManagers(false);
+            toggleCommentUserManager(false);
+            toggleSubmission(true);
+        }
+    }
+
     const logoutHandler = () =>
     {        
         sessionStorage.setItem('token', 'null');
@@ -145,20 +178,36 @@ const AdminPage = () =>
             </div>: 
             <div className = {styles.AdminPageContainer}>
                 <div className = {styles.AdminNav}>
-                    <button onClick = {logoutHandler} className = {styles.logoutButton}>Logout</button>
-                    <button onClick = {() => toggleManagers(!showManagers)} className = {styles.toggleManagerButton}>{showManagers?'Create Blog Posts':'Manage Blog Posts'}</button>
-                    <button>Comment Manager</button>
-                    <button>User Manager</button>
+                    <button onClick = {logoutHandler} 
+                            className = {styles.logoutButton}>Logout</button>
+                    <button onClick = {handleSubmissionManagerChange}>Submission Manager</button>
+                    <button onClick = {handlePostManagerChange}>Manage Posts</button>
+                    <button onClick = {handleCommentUserManagerChange}>Comment/User Manager</button>
                 </div>
                 <div className = {styles.BlogPanelsContainer}>
-                    {showManagers == false?<div>
-                        <SubmissionForm/>
-                    </div>:null}
+                    {showSubmission?
+                        <div>
+                            <SubmissionForm/>
+                        </div>:null
+                    }
 
-                    {showManagers == true?<div className = {styles.BlogPanels}>         
-                        <BlogPostManager/>
-                        <BlogPostByYouManager/>             
-                    </div>: null}
+                    {showManagers == true?
+                        <div className = {styles.BlogPanels}>         
+                            <BlogPostManager/>
+                            <BlogPostByYouManager/>             
+                        </div>
+                        : 
+                        null
+                    }
+
+
+                    {showCommentUserManager == true?
+                    <div>
+                        <CommentUserManager/>
+                    </div>
+                    :
+                    null}
+
                 </div>
             </div>
             }

@@ -1,12 +1,15 @@
 import Axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import ByYouCard from './ByYouCard';
 import styles from './ByYouPosts.module.scss';
+import { GeneralContext } from '../../components/GeneralContext';
 
 const BlogPostByYouManager = (props) =>
 {
     const postsPerPage = 4;
+    let myContext = useContext(GeneralContext);
+    let myUrl = myContext.value.url;
 
     const [postData, updatePosts] = useState({
         position: 0,
@@ -19,7 +22,7 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
+            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
                 if(mounted)
@@ -48,7 +51,7 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null)
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
+            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
                 let newPos = postData.position;
@@ -84,7 +87,7 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null && token !== 'null')
         {
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
+            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
             axios.post(url, {isVisible: 'False'})
             .then((response) => {
                 let myPosts = postData;

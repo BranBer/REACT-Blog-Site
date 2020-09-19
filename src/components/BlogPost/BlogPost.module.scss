@@ -7,7 +7,7 @@
     margin: 2em;
     height: 27em;
 
-    padding: 1em 1em 1em 1em;
+    padding: 1em 1em 3em 1em;
     border-radius: 10px;
 
     background-color: white;
@@ -93,8 +93,27 @@ Link
     color:black;
 }
 
+.Like
+{
+    font-size: 24px;
+    -webkit-text-stroke: 1px black;
+    color: white;
+    padding: 1em;
 
+    transition: color 1.5s ease-in-out;
+    cursor: pointer;
 
+    &:hover
+    {
+        color: red;
+    }
+}
+
+.View
+{
+    padding: 1em;
+    font-size: 24px;
+}
 
 
 ::-webkit-scrollbar-corner { background: rgba(0,0,0,0.0); }

@@ -99,6 +99,8 @@ const BlogPosts = (props) =>
             return (<BlogPost key = {index}
                               title = {object[1]['post_title']}
                               author = {object[1]['author']}
+                              likes = {object[1]['likes']}
+                              views = {object[1]['views']}
                               content = {object[1]['post_content']}
                               date = {object[1]['date']}
                               images = {object[1]['images']}
