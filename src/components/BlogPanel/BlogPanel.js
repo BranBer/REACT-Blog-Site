@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import BlogPosts from '../BlogPost/BlogPosts';
 import styles from './BlogPanel.module.scss';
 
-const Panel = () => 
+const Panel = (props) => 
 {
     const [ MyBlogPosts, ChangeBlogPosts ] = useState(
     {
         posts: []
     });
 
+    let position = props.match.params.position;
+
     return (
     <div className = {styles.BlogPanel}>
-        <BlogPosts/>
+        <BlogPosts position = {position}/>
     </div>);
 }
 

@@ -2,9 +2,9 @@ import React, {useContext, useState, useEffect} from 'react';
 import SiteHeader from '../components/SiteHeader/SiteHeader'
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Panel from '../components/BlogPanel/BlogPanel';
 
 import AboutPage from '../pages/AboutPage';
-import BlogPostsPage from '../pages/BlogPostsPage';
 import HomePage from '../pages/HomePage';
 import SubmitPage from '../pages/SubmitPage';
 import AdminPage from '../pages/AdminPage';
@@ -28,8 +28,10 @@ function App() {
 
         <Switch>          
           <Route path="/About" component = {AboutPage}/>  
-          <Route path="/BlogPosts" component = {BlogPostsPage}/>
-          <Route path="/BlogPostsByYou" component = {ByYouPanel}/>
+          <Route path="/BlogPosts/:position" 
+                 render = {(props) => <Panel {...props} key = {Math.random().toString(36).substring(2,10)} />}/>
+          <Route path="/BlogPostsByYou/:position" 
+                 render = {(props) => <ByYouPanel {...props} key = {Math.random().toString(36).substring(2,10)} />}/>
           <Route path="/Submit" component = {SubmitPage}/>
           <Route path="/post/:id" component = {BlogPostSelected}/> 
           <Route path="/AdminLogin" component = {AdminPage}/> 

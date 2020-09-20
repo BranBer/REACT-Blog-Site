@@ -5,93 +5,42 @@ import GalleryImage from '../GalleryImage/GalleryImage';
 import BlogPost from './BlogPost';
 import styles from './BlogPosts.module.scss';
 import { GeneralContext } from '../GeneralContext';
+import { Link } from 'react-router-dom';
 
 const BlogPosts = (props) =>
-{
-    const [PostData, updatePostData] = useState({data: {},
-                                                position: 0});
-    
+{    
     const postsPerPage = 4;
+    const position = parseInt(props.position,10);
+    let previous = position - postsPerPage < 0? 0: position - postsPerPage;
+    let next = position + postsPerPage;
 
     let myContext = useContext(GeneralContext);
 
-    useEffect( () => {
-        let mounted = true;
+    const [PostData, updatePostData] = useState({data: {},
+        position: position});
 
+    const [outOfBounds, updateOutOfBounds] = useState(false);
+
+
+    const getPostData = () => 
+    {
         axios.get(myContext.value.url + '/posts/' + PostData.position + '/'+ postsPerPage + '/')
         .then(response => {
-            
-            if(mounted)
+            updatePostData({data: response.data.slice(1, response.data.length),
+                            position: PostData.position});
+
+            if(response.data[0] == true)
             {
-                updatePostData({data: response.data,
-                                position: PostData.position});
+                updateOutOfBounds(true);
             }
         });
-
-        return () => mounted = false;
-
-    });
-
-    const getNextPosts = () =>
-    {
-        let myPostData = PostData;
-        myPostData.position += postsPerPage;
-        updatePostData(myPostData);
-
-        const prevData = PostData.data;
-
-        let token = sessionStorage.getItem('token');
-    
-
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/'+ PostData.position + '/' + postsPerPage + '/';
-        axios.get(url)
-        .then((response) => {
-            let newPos = PostData.position;
-            
-            if(JSON.stringify(response.data) == JSON.stringify(prevData))
-            {
-                newPos -= postsPerPage;
-            }
-
-            updatePostData(
-            {
-                position: newPos,
-                posts: response.data
-            });       
-        })
-        .catch((error) =>
-        {                
-            console.log('Out of bounds');       
-        });
     }
-    
-    const getPrevPosts = () =>
-    {
-        let myPostData = PostData;
-        myPostData.position = myPostData.position - 4 > 0? myPostData.position - 4: 0;
-        updatePostData(myPostData);
-
-        let token = sessionStorage.getItem('token');
 
 
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/'+ PostData.position + '/' + postsPerPage + '/';
-        axios.get(url, {})
-        .then((response) => {
-            let myPosts = PostData;
-            myPosts.posts = response.data;
-            updatePostData(
-            {
-                position: PostData.position,
-                posts: response.data
-            });       
+    useEffect( () => { 
+        getPostData();        
+    }, []);
 
-            console.log(PostData);
-        })
-        .catch((error) =>
-        {
-            console.log('Out of bounds');       
-        });
-    }
 
     const posts = PostData.data !== undefined?Object.entries(PostData.data).map(
         (object, index) => 
@@ -112,9 +61,13 @@ const BlogPosts = (props) =>
     return (
     <div className = {styles.BlogPostsContainer}>
         <div className = {styles.PostCycler}>
-            <button onClick = {getPrevPosts}>◀ </button>
-            <h2>Posts</h2>
-            <button onClick = {getNextPosts}>▶</button>
+                <Link to =  {'/BlogPosts/' + previous}>
+                    <button>◀ </button>
+                </Link>
+                <h2>Posts By You</h2>
+                <Link to =  {outOfBounds?'/BlogPosts/' + position:'/BlogPosts/' + next}>
+                    <button>▶</button>
+                </Link>
         </div>
 
         <hr/>

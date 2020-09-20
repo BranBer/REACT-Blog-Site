@@ -3,34 +3,40 @@ import styles from './ByYouPanel.module.scss';
 import ByYouPost from './ByYouPost';
 import axios from 'axios';
 import { GeneralContext } from '../GeneralContext';
+import { Link, Redirect } from 'react-router-dom';
 
-const ByYouPanel = () =>
+const ByYouPanel = (props) =>
 {
     const postsPerPage = 4;
+    const position = parseInt(props.match.params.position,10);
+    let previous = position - postsPerPage < 0? 0: position - postsPerPage;
+    let next = position + postsPerPage;
+
+    const [outOfBounds, updateOutOfBounds] = useState(false);
 
     const [PostData, updatePostData] = useState({
         posts: {},
-        position: 0
+        position: position
     });
 
     let myContext = useContext(GeneralContext);
 
-    useEffect(()=>
+    const getPostData = () =>
     {
         let url = myContext.value.url + '/posts/ByYou/' + PostData.position + '/' + postsPerPage + '/';
-        let mounted = true;
-
 
         axios.get(url)
         .then(
             response =>
             {
-                if(mounted)
+                updatePostData({
+                posts: response.data.slice(1, response.data.length),
+                position: PostData.position
+                }); 
+
+                if(response.data[0] == true)
                 {
-                    updatePostData({
-                    posts: response.data,
-                    position: PostData.position
-                    });
+                    updateOutOfBounds(true);
                 }
             }
         )
@@ -38,74 +44,12 @@ const ByYouPanel = () =>
             {
                 console.log('Something went wrong');
             });
-
-        return () => mounted = false;
-    });
-
-    const getNextPosts = () =>
-    {
-        let myPostData = PostData;
-        myPostData.position += postsPerPage;
-        updatePostData(myPostData);
-
-        const prevData = PostData.posts;
-
-        let token = sessionStorage.getItem('token');
-    
-        if(token !== null)
-        {
-            let url = myContext.value.url + '/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
-            axios.get(url)
-            .then((response) => {
-                let newPos = PostData.position;
-
-                if(JSON.stringify(response.data) == JSON.stringify(prevData))
-                {
-                    newPos -= postsPerPage;
-                }
-
-                updatePostData(
-                {
-                    position: newPos,
-                    posts: response.data
-                });       
-
-                
-            })
-            .catch((error) =>
-            {                
-                console.log('Out of bounds');       
-            });
-        }
     }
-    
-    const getPrevPosts = () =>
+
+    useEffect(()=>
     {
-        let myPostData = PostData;
-        myPostData.position = myPostData.position - 4 > 0? myPostData.position - 4: 0;
-        updatePostData(myPostData);
-
-        let token = sessionStorage.getItem('token');
-
-        if(token !== null)
-        {
-            let url = myContext.value.url + '/posts/ByYou/'+ PostData.position + '/' + postsPerPage + '/';
-            axios.get(url, {})
-            .then((response) => {
-                let myPosts = PostData;
-                myPosts.posts = response.data;
-                updatePostData(
-                {
-                    position: PostData.position,
-                    posts: response.data
-                });       
-            })
-            .catch((error) =>
-            {
-                console.log('Out of bounds');       
-            });
-        }
-    }
+        getPostData();
+    }, []);
 
     const posts = Object.entries(PostData.posts).map((object, index) => 
     {
@@ -125,9 +69,13 @@ const ByYouPanel = () =>
     <div className = {styles.byYouPanelContainer}>
         <div>
             <div className = {styles.PostCycler}>
-                <button onClick = {getPrevPosts}>◀ </button>
+                <Link to =  {'/BlogPostsByYou/' + previous}>
+                    <button>◀ </button>
+                </Link>
                 <h2>Posts By You</h2>
-                <button onClick = {getNextPosts}>▶</button>
+                <Link to =  {outOfBounds?'/BlogPostsByYou/' + position:'/BlogPostsByYou/' + next}>
+                    <button>▶</button>
+                </Link>
             </div>
         </div>
 
