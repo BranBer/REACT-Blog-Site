@@ -35,4 +35,22 @@
         color:white;
         background-color: black;
     }
+
+    
+    .Like
+    {
+        font-size: 24px;
+        color: white;
+        -webkit-text-stroke: 1px black;
+        
+        padding: 1em;
+
+        transition: color 1.5s ease-in-out;
+        cursor: pointer;
+
+        &:hover
+        {
+            color: red;
+        }
+    }
 }

@@ -115,6 +115,7 @@ const ByYouPanel = () =>
                     id = {object[1]['id']}
                     author = {object[1]['author']}
                     date = {object[1]['date']}
+                    likes = {object[1]['likes']}
                     content = {object[1]['post_content']}
                     title = {object[1]['post_title']}
                     visibility = {object[1]['isVisible']}/>);

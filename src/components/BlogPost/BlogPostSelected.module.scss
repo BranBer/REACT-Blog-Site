@@ -67,6 +67,22 @@
     align-items: baseline;
 }
 
+.Like
+{
+    font-size: 24px;
+    -webkit-text-stroke: 1px black;
+    color: white;
+    padding: 1em;
+
+    transition: color 1.5s ease-in-out;
+    cursor: pointer;
+
+    &:hover
+    {
+        color: red;
+    }
+}
+
 // .PostGalleryImage
 // {
 //     height: 50%;
