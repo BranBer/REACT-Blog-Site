@@ -14,6 +14,7 @@ const UserProfile = () =>
         displayName: '',
         email: '',
         authCode: '',
+        subscribed: false,
     });
     
     const [userInfo, updateUserInfo] = useState(
@@ -21,8 +22,11 @@ const UserProfile = () =>
             displayName: '',
             username: '',
             email: '',
+            subscribed: false
         }
     );
+
+    const [isChecked, updateIsChecked] = useState(false);
 
     const[showEmailInputFields, updateShowEmailInputFields] = useState(false);
 
@@ -32,7 +36,7 @@ const UserProfile = () =>
         if(showProfile)
         {   
             //Get basic user data
-            let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/User/GetUser/';
+            let url = myContext.value.url + '/User/GetUser/';
             let config = {
                 headers: 
                 {
@@ -49,7 +53,10 @@ const UserProfile = () =>
                         displayName: response.data.display_name,
                         username:  response.data.username,
                         email: response.data.email,
+                        subscribed: response.data.subscribed? true: false,
                     });
+
+                    updateIsChecked(response.data.subscribed? true: false);
                 }
             )
             .catch(
@@ -80,6 +87,11 @@ const UserProfile = () =>
         updateFields(myFields);
     }
 
+    const handleSubscriptionChange = (event) =>
+    {
+        updateIsChecked(!isChecked);
+    }
+
     const handleAuthCodeChange = (event) =>
     {
         let myFields = fields;
@@ -104,6 +116,11 @@ const UserProfile = () =>
             {
                 body.append('email', fields.email);
             }
+            
+            if(typeof fields.subscribed === 'boolean')
+            {
+                body.append('subscribed', isChecked);
+            }
 
             let config = {
                 headers: 
@@ -116,12 +133,10 @@ const UserProfile = () =>
             .then(
                 response =>
                 {
-                    if(fields.displayName !== '')
+                    if(fields.displayName !== '' || isChecked !== userInfo.subscribed)
                     {
                         updateStatusMessage('Profile Updated');
                     }
-
-                    pullUserInfo();
                     
                     //Show email verification form if user wants to change email
                     if(fields.email !== '')
@@ -133,6 +148,8 @@ const UserProfile = () =>
                     {
                         updateShowEmailInputFields(false);  
                     }
+
+                    pullUserInfo();
                 }
             )
             .catch(
@@ -214,6 +231,11 @@ const UserProfile = () =>
                         <span>{userInfo.email}</span>
                     </div>
 
+                    <div className = {styles.Field}>
+                        <label>Subscribed: </label>
+                        <span>{userInfo.subscribed?'Yes':'No'}</span>
+                    </div>
+
                     <h2>Edit Profile</h2>
 
                     <div className = {styles.InputField}>
@@ -224,6 +246,12 @@ const UserProfile = () =>
                     <div className = {styles.InputField}>
                         <label>New Email: </label>
                         <input type = "text" onChange = {handleEmailChange}></input>     
+                    </div>
+
+                    <div className = {styles.InputField}>
+                        <label>Subscribe: </label>
+                        <input type = "checkbox" checked = {isChecked} onChange = {handleSubscriptionChange}></input>     
+                        <sub>Subscribe to newsletter to stay updated on new posts!</sub>
                     </div>
 
                     {showEmailInputFields?
