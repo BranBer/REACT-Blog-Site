@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Panel from '../components/BlogPanel/BlogPanel';
 
 import AboutPage from '../pages/AboutPage';
-import HomePage from '../pages/HomePage';
+import Home from '../components/Home/Home';
 import SubmitPage from '../pages/SubmitPage';
 import AdminPage from '../pages/AdminPage';
 import ByYouPanel from '../components/ByYou/ByYouPanel';
@@ -41,7 +41,7 @@ function App() {
           <Route path="/ForgotPassword" component = {ForgotPassword}/> 
           <Route path="/ResetPassword" component = {ResetPassword}/>
           <Route path="/postsByYou/:id" component = {SelectedByYouPost}/>
-          <Route path="/" component = {HomePage}/> 
+          <Route path="/" component = {Home}/> 
         </Switch>
 
       

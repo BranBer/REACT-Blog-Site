@@ -1,0 +1,33 @@
+.HomeContainer
+{
+    margin: 2em;
+    padding: 2em;
+    width: 60%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+
+    hr{
+        width: 100%;
+    }
+}
+
+.ModifyDescription
+{
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    row-gap: 1em;
+
+    textarea{
+        width: 100%;
+    }
+
+    button{
+        color: white;
+        background-color: black;
+    }
+
+}
