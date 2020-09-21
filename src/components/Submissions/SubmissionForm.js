@@ -16,6 +16,7 @@ const SubmissionForm = (props) =>
         author: null,
         date: null
     });
+    const [statusMessage, updateStatusMessage] = useState('');
 
     let myContext = useContext(GeneralContext);
 
@@ -43,8 +44,6 @@ const SubmissionForm = (props) =>
         let nonceString = Math.random().toString(36).substring(2, 7);
         let filename = key + today + nonceString + '.' + img.fileExtension;        
 
-        console.log(filename);
-
         const croppedImageFile = base64Stringtofile(img.img, filename);
         data[key] = croppedImageFile;
 
@@ -56,13 +55,8 @@ const SubmissionForm = (props) =>
         let key = 'image' + id.toString();
         let data = postData;
         
-        console.log(key);
-        console.log('before');
-        console.log(data);
         data[key] = undefined;
 
-        console.log('after');
-        console.log(data);
         updatePostData(data);
     }
 
@@ -85,7 +79,6 @@ const SubmissionForm = (props) =>
     const updateContent = (value) =>
     {   
         let data = postData;
-        console.log(data);
         
         data['post_content'] = value;
 
@@ -108,7 +101,6 @@ const SubmissionForm = (props) =>
 
         for (let v in dataEntries)
         {
-            //console.log(dataEntries[v]);
             let key = dataEntries[v][0];
             let value = dataEntries[v][1];
 
@@ -138,9 +130,12 @@ const SubmissionForm = (props) =>
                 config
             )
             .then((response) => {
-                console.log(response.data);
+                updateStatusMessage('Post has been published!');
             })
-            .catch(err => console.log(err));
+            .catch((err) =>
+            {
+                updateStatusMessage('Failed to publish post!');
+            })
         }
         else
         {
@@ -175,7 +170,8 @@ const SubmissionForm = (props) =>
                     <div className = {styles.editor}>
                         <Editor updateContent = {updateContent}/>    
                     </div>                         
-    
+                    <sub>{statusMessage}</sub>
+                    <br/>
                     <button type = "button" id = {styles.submitButton} onClick = {uploadContent}>Submit Post</button>
                 </form>
             </div>
