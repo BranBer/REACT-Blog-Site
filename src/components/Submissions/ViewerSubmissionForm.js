@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styles from './ViewerSubmissionForm.module.scss';
 import axios from 'axios';
 import { GeneralContext } from '../GeneralContext';
@@ -9,9 +9,10 @@ const ViewerSubmissionForm = (props) =>
 
     const [postData, updatePostData] = useState({
         post_title: '',
-        author: 'anonymous',
         post_content: ''
     });
+
+    const [isAnonymous, updateIsAnonymous] = useState(false);
 
     const [statusMsg, updateStatusMsg] = useState('');
 
@@ -22,11 +23,9 @@ const ViewerSubmissionForm = (props) =>
         updatePostData(myPostData);
     }
 
-    const handleAuthorChange = (event) =>
+    const handleAnonymousChange = (event) =>
     {
-        let myPostData = postData;
-        myPostData.author = event.target.value;
-        updatePostData(myPostData);
+        updateIsAnonymous(event.target.checked);
     }
 
     const handleContentChange = (event) =>
@@ -41,34 +40,46 @@ const ViewerSubmissionForm = (props) =>
         let myPostData = Object.entries(postData);
         let url = myContext.value.url + '/create/ByYou/';
         let body = new FormData();
+        body.append('post_title', postData.post_title);
+        body.append('post_content', postData.post_content);
+        body.append('is_anonymous', isAnonymous);
+
+        let token = sessionStorage.getItem('token');
 
         let config = {
             headers:
             {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Token ' + token
             }
         };
 
-        for (var i in myPostData)
+        if(postData.post_title !== '' && postData.post_content !== '' && token !== 'null' && token !== null)
         {
-            body.append(myPostData[i][0], myPostData[i][1]);
-        }
-
-        axios.post(url, body, config)
-        .then(
-            response =>
-            {
-                if(response.status == 200)
+            axios.post(url, body, config)
+            .then(
+                response =>
                 {
-                    updateStatusMsg("Post Successfully Submitted");
+                    if(response.status == 200)
+                    {
+                        updateStatusMsg("Post Successfully Submitted For Review");
+                    }
                 }
-            }
-        )
-        .catch(
-            err => 
-            {
-                updateStatusMsg('Failed to Submit Post');
-            });
+            )
+            .catch(
+                err => 
+                {
+                    updateStatusMsg('Failed to Submit Post');
+                });
+        }
+        else if(token == 'null' || token == null)
+        {
+            updateStatusMsg('Login ');
+        }
+        else
+        {
+            updateStatusMsg('Must fill out form completely');
+        }
     }
 
 
@@ -86,10 +97,10 @@ const ViewerSubmissionForm = (props) =>
         <br/>
 
         <div className = {styles.inputAlign}>
-            <label>Post Author </label>
-            <input type = "text" onChange = {handleAuthorChange}/>
+            <label>Is Anonymous Post</label>
+            <input type = "checkbox" checked = {isAnonymous} onChange = {handleAnonymousChange}/>
         </div>
-        <sub>Leave blank to be anonymous</sub>
+        
         <br/>
 
     

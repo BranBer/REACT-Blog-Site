@@ -83,14 +83,18 @@
     .BlogPanelsContainer
     {
         margin: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .BlogPanels
     {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
+        flex-direction: column;
         align-items: flex-start;
         padding: 2em;
+        row-gap: 1em;
     }
 }

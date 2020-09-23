@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styles from './BlogPostManager.module.scss';
 import axios from 'axios';
+import { GeneralContext } from '../../components/GeneralContext';
 
 const BlogPostManageable = (props) =>
 {
     const [visible, updateVisibility] = useState(props.isVisible);
     const [showPost, updateShowPost] = useState(true);
 
+    let myContext = useContext(GeneralContext);
+    let myUrl = myContext.value.url;
+
     const VisibilityHandler = () =>
     {
         const token = sessionStorage.getItem('token');
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/UpdateVisibility/';
+        let url = myUrl + '/posts/UpdateVisibility/';
         let body = new FormData();
         body.append('id', props.id);
         let config = {headers: {'Content-Type': 'multipart/form-data',
@@ -35,7 +39,7 @@ const BlogPostManageable = (props) =>
     const deleteHandler = () =>
     {
         const token = sessionStorage.getItem('token');
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/delete/';
+        let url = myUrl + '/posts/delete/';
         let body = new FormData();
         body.append('id', props.id);
         let config = {headers: {'Content-Type': 'multipart/form-data',
@@ -63,7 +67,7 @@ const BlogPostManageable = (props) =>
                 showPost?<div className = {styles.BlogPostManageableFlex}> 
         
                     <div className = {styles.BlogPostManageableContainer}>
-                        <img src = {'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/media/' + props.images[0]}/>
+                        {props.images[0] !== undefined?<img src = {myUrl + '/media/' + props.images[0]}/>:null}
             
                         <div className = {styles.BlogPostManageable}>
                             <h2>{props.title}</h2>

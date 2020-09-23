@@ -7,7 +7,7 @@ import { GeneralContext } from '../GeneralContext';
 const ByYouPost = (props) =>
 {
     const [showPost, updateShowPost] = useState(true);
-
+    const [likes, updateLikes] = useState(props.likes);
     const [hasLiked, updateHasLiked] = useState({color: 'white'});
 
     let myContext = useContext(GeneralContext);
@@ -78,10 +78,12 @@ const ByYouPost = (props) =>
                     if(response.data.Liked == true)
                     {
                         updateHasLiked({color: 'red'});
+                        updateLikes(likes + 1);
                     }
                     else
                     {
                         updateHasLiked({color: 'white'});
+                        updateLikes(likes - 1);
                     }
                 }
             );
@@ -97,7 +99,7 @@ const ByYouPost = (props) =>
         <>
             {showPost?<div className = {styles.ByYouPostContainer}>
                 <h2>{props.title}</h2>
-                <sub><span className = {styles.Like} style = {hasLiked} onClick = {likePost}>❤</span> {props.likes}</sub>
+                <sub><span className = {styles.Like} style = {hasLiked} onClick = {likePost}>❤</span> {likes}</sub>
                 <sub>{props.author}</sub>
                 <sub>{props.date}</sub>
                 <hr/>

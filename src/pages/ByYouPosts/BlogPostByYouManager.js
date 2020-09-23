@@ -16,29 +16,28 @@ const BlogPostByYouManager = (props) =>
         posts: {}});
 
     useEffect(() => {
-        let mounted = true;
 
         const token = sessionStorage.getItem('token');
 
         if(token !== null)
         {
-            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
-            axios.post(url, {isVisible: 'False'})
+            let url = myUrl + '/posts/ByYou/All/'+ postData.position + '/' + postsPerPage + '/';
+            axios.get(url)
             .then((response) => {
-                if(mounted)
-                {
                     updatePosts(
                     {
                         position: postData.position,
                         posts: response.data
                     });
-                }
+            
             })
         }
 
-        return () => mounted = false;
-    });
+    }, []);
 
+    /*
+    Gets the next pages of posts. If the next pages of posts is the same as before, the page does not change
+    */
     const getNextPosts = () =>
     {
         let myPostData = postData;
@@ -51,8 +50,8 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null)
         {
-            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
-            axios.post(url, {isVisible: 'False'})
+            let url = myUrl + '/posts/ByYou/All/'+ postData.position + '/' + postsPerPage + '/';
+            axios.get(url)
             .then((response) => {
                 let newPos = postData.position;
 
@@ -61,14 +60,12 @@ const BlogPostByYouManager = (props) =>
                     newPos -= postsPerPage;
                 }
 
-
                 updatePosts(
                 {
                     position: newPos,
                     posts: response.data
                 });       
 
-                console.log(response.data);
             })
             .catch((error) =>
             {
@@ -77,6 +74,9 @@ const BlogPostByYouManager = (props) =>
         }
     }
     
+    /*
+    Gets Previous page of posts. User cannot go below page 0
+    */
     const getPrevPosts = () =>
     {
         let myPostData = postData;
@@ -87,20 +87,17 @@ const BlogPostByYouManager = (props) =>
 
         if(token !== null && token !== 'null')
         {
-            let url = myUrl + '/posts/ByYou/'+ postData.position + '/' + postsPerPage + '/';
-            axios.post(url, {isVisible: 'False'})
+            let url = myUrl + '/posts/ByYou/All/'+ postData.position + '/' + postsPerPage + '/';
+            axios.get(url)
             .then((response) => {
                 let myPosts = postData;
                 myPosts.posts = response.data;
-
 
                 updatePosts(
                 {
                     position: postData.position,
                     posts: response.data
                 });       
-
-                console.log(postData);
             })
             .catch((error) =>
             {
@@ -109,9 +106,10 @@ const BlogPostByYouManager = (props) =>
         }
     }
 
-    let posts = Object.entries(postData.posts).map(
+    let posts = Object.entries(postData.posts).slice(1, postData.posts.length).map(
         (object, index) =>
         {
+            //console.log(object[1]['id'] + ': ' + object[1]['isVisible']);
             let key = 'byYou' + object[1]['id'].toString();
             return (<ByYouCard key = {key}
                                id = {object[1]['id']}

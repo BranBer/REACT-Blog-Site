@@ -1,16 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import styles from './ByYouPosts.module.scss';
 import axios from 'axios';
+import { GeneralContext } from '../../components/GeneralContext';
 
 const ByYouCard = (props) =>
 {
+    let visibilityStatus = props.visibility;
+
     const [showPost, updateShowPost] = useState(true);
-    const [visible, UpdateVisibility] = useState(props.visibility.toString().toLowerCase() == 'true'? true: false)
+    const [visible, UpdateVisibility] = useState(visibilityStatus == 'true' || visibilityStatus == true? true: false)
+
+    let myContext = useContext(GeneralContext);
+    let myUrl = myContext.value.url;
 
     const deleteHandler = () =>
     {
         const token = sessionStorage.getItem('token');
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/delete/';
+        let url = myUrl + '/posts/delete/';
         let body = new FormData();
         body.append('id', props.id);
         let config = {headers: {'Content-Type': 'multipart/form-data',
@@ -27,15 +33,17 @@ const ByYouCard = (props) =>
                 console.log("You are not logged in...How did you get here...?");
             }        
         })
-        .catch(err => {
-            console.log(err);
-        });
     }
+
+    useEffect(()=>
+    {
+        UpdateVisibility(visibilityStatus == 'true' || visibilityStatus == true? true: false);
+    }, []);
 
     const visibilityHander = () =>
     {
         const token = sessionStorage.getItem('token');
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/posts/UpdateVisibility/';
+        let url = myUrl + '/posts/UpdateVisibility/';
         let body = new FormData();
         body.append('id', props.id);
         let config = {headers: {'Content-Type': 'multipart/form-data',
@@ -52,9 +60,6 @@ const ByYouCard = (props) =>
                 console.log("You are not logged in...How did you get here...?");
             }  
         })
-        .catch(err => {
-            console.log(err);
-        });
     }
 
     return (
@@ -69,7 +74,7 @@ const ByYouCard = (props) =>
                     </div>
                     <div className = {styles.PostOptions}>
                         <button onClick = {visibilityHander} 
-                                className = {!visible?styles.makeVisibleButton:styles.makeInvisibleButton}>{!visible?'Hide':'Show'}</button>
+                                className = {visible?styles.makeVisibleButton:styles.makeInvisibleButton}>{visible?'Hide':'Show'}</button>
                         <button onClick = {deleteHandler} 
                                 className = {styles.deleteButton}>Delete</button>
                     </div>

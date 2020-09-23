@@ -26,6 +26,11 @@ const AdminPage = () =>
     const [showSubmission, toggleSubmission] = useState(false);
     
 
+    useEffect(() => 
+    {
+        isAdminAcount();             
+    }, []);
+
     const isAdminAcount = () =>
     {
         const token = sessionStorage.getItem('token');
@@ -46,6 +51,7 @@ const AdminPage = () =>
                     {
                         updateLoginStatus("Login Success");
                         updateShowLogin(false);
+                        toggleManagers(true);
                     }
                     else
                     {
@@ -65,15 +71,8 @@ const AdminPage = () =>
         }
     }
 
-    useEffect(() => 
-    {
-        isAdminAcount();             
-    }, []);
-
     const loginHandler = () =>
     {
-        let url = 'http://ec2-18-221-47-165.us-east-2.compute.amazonaws.com/login/';
-
         let config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -85,7 +84,7 @@ const AdminPage = () =>
         form_data.append('password', Credentials.password);
 
         axios.post(
-            url, 
+            url + '/login/', 
             form_data,             
             {
                 headers : {
@@ -152,7 +151,7 @@ const AdminPage = () =>
     {        
         sessionStorage.setItem('token', 'null');
         isAdminAcount();
-        //updateShowLogin(true);
+        updateLoginStatus('Logged Out');
     }
 
     return (

@@ -13,24 +13,20 @@ const BlogPostManager = (props) =>
 
     let myContext = useContext(GeneralContext);
     let myUrl = myContext.value.url;
+
     useEffect( () => {
-        let mounted = true;
         const token = sessionStorage.getItem('token');        
         
         if(token !== null)
         {
             axios.get(myUrl + '/posts/' + PostData.position + '/'+ postsPerPage + '/')
             .then(response => {
-                if(mounted)
-                {
-                    updatePostData({data: response.data,
-                    position: PostData.position});
-                }
+                updatePostData({data: response.data,
+                position: PostData.position});      
             });
-        }       
+        }
         
-        return () => mounted = false;
-    });
+    }, []);
 
     const getNextPosts = () =>
     {
@@ -49,8 +45,6 @@ const BlogPostManager = (props) =>
             .then((response) => {
                 let newPos = PostData.position;
                 
-                console.log(response.data);
-
                 if(JSON.stringify(response.data) == JSON.stringify(prevData))
                 {
                     newPos -= postsPerPage;
@@ -59,14 +53,13 @@ const BlogPostManager = (props) =>
                 updatePostData(
                 {
                     position: newPos,
-                    posts: response.data
+                    data: response.data
                 });       
-                console.log(prevData);
+
+                
+
+                console.log(response.data);
             })
-            .catch((error) =>
-            {                
-                console.log('Out of bounds');       
-            });
         }
     }
     
@@ -88,19 +81,14 @@ const BlogPostManager = (props) =>
                 updatePostData(
                 {
                     position: PostData.position,
-                    posts: response.data
+                    data: response.data
                 });       
 
-                console.log(PostData);
             })
-            .catch((error) =>
-            {
-                console.log('Out of bounds');       
-            });
         }
     }
 
-    let posts = PostData.data !== undefined?Object.entries(PostData.data).map(
+    let posts = PostData.data !== undefined?Object.entries(PostData.data).slice(1,PostData.data.length).map(
         (object, index) => 
         {
             return (<BlogPostManageable key = {'manageablePost' + index.toString()}

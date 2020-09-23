@@ -108,12 +108,12 @@ const ResetPassword = (props) =>
                 </div>
 
                 <div className = {styles.InputAlign}>
-                    <label>Password:</label>
+                    <label>New Password:</label>
                     <input type = "password" onChange = {handlePasswordChange}/>
                 </div>
                 
                 <div className = {styles.InputAlign}>
-                    <label>Password Again: </label>
+                    <label>New Password Again: </label>
                     <input type = "password" onChange = {handlePassword2Change}/>
                 </div>
 
