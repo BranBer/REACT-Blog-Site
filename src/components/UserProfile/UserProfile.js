@@ -2,11 +2,12 @@ import React, {useState, useEffect, useContext} from 'react';
 import styles from './UserProfile.module.scss';
 import axios from 'axios';
 import { GeneralContext } from '../GeneralContext';
-import { Redirect } from 'react-router-dom';
+import { Redirect , useHistory} from 'react-router-dom';
 
 const UserProfile = () =>
 {
     let myContext = useContext(GeneralContext);
+    let myHistory = useHistory();
 
     const [statusMessage, updateStatusMessage] = useState('');
     const [showProfile, updateShowProfile] = useState(sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== 'null');
@@ -209,6 +210,7 @@ const UserProfile = () =>
         sessionStorage.setItem('token', null);
         myContext.executeLoadFunction();
         updateShowProfile(false);
+        myHistory.goBack();
     }
 
     return (
@@ -273,7 +275,7 @@ const UserProfile = () =>
                     <button onClick = {updateProfile}>Save Changes</button>
                     <button onClick = {logoutHandler} className = {styles.LogoutButton}>Logout</button>
                 </>:
-                <Redirect to ="Login"/>}
+                null}
             </div>
         </>
     );

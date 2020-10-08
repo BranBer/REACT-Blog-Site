@@ -13,6 +13,13 @@
     background-color: white;
     //box-shadow: 4px 4px 15px black;
     border: 1px solid darkgray;
+
+    button{
+        border-radius: 0;
+
+        &:hover{
+        }
+    }
 }
 
 .BlogPost
@@ -29,6 +36,8 @@
 
         box-shadow: 5px 5px 10px 5px #4D457A;
     }
+
+
 }
 
 Link

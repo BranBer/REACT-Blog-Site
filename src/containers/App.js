@@ -6,6 +6,7 @@ import Panel from '../components/BlogPanel/BlogPanel';
 
 import AboutPage from '../pages/AboutPage';
 import Home from '../components/Home/Home';
+import ViewerSubmissionForm from '../components/Submissions/ViewerSubmissionForm';
 import SubmitPage from '../pages/SubmitPage';
 import AdminPage from '../pages/AdminPage';
 import ByYouPanel from '../components/ByYou/ByYouPanel';
@@ -34,7 +35,7 @@ function App() {
                      render = {(props) => <Panel {...props} key = {Math.random().toString(36).substring(2,10)} />}/>
               <Route path="/BlogPostsByYou/:position" 
                      render = {(props) => <ByYouPanel {...props} key = {Math.random().toString(36).substring(2,10)} />}/>
-              <Route path="/Submit" component = {SubmitPage}/>
+              <Route path="/Submit" component = {ViewerSubmissionForm}/>
               <Route path="/post/:id" component = {BlogPostSelected}/> 
               <Route path="/AdminLogin" component = {AdminPage}/> 
               <Route path="/Login" component = {Login}/> 
@@ -48,8 +49,6 @@ function App() {
           </div>
   
           <div className = "StaticDiv">
-            <img src = {'/lotus.jpg'}/>
-            <img src = {'/lotus.jpg'}/>
             <img src = {'/lotus.jpg'}/>
           </div>
         </div>

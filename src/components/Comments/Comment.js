@@ -212,7 +212,7 @@ const Comment = (props) =>
                         <sub>{new Date(props.date).toLocaleString()}</sub>
                     </div>
 
-                    {!props.showDelete?<button onClick = {deleteComment}>Delete</button>:null}
+                    {props.showDelete?<button onClick = {deleteComment}>Delete</button>:null}
                 </div>
 
                 {replies.length > 0?

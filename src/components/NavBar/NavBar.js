@@ -127,7 +127,7 @@ const NavBar = (props) =>
         <NavSection current = { props.currentContent }>            
                 <li><StyledLink to = "/">Home</StyledLink></li>
                 <li><StyledLink to = "/BlogPosts/0">Blog</StyledLink></li>
-                <li><StyledLink to = "/BlogPostsByYou/0">Blog by You</StyledLink></li>
+                <li><StyledLink to = "/BlogPostsByYou/0">Our Voices</StyledLink></li>
                 <li><StyledLink to = "/Submit">Submit</StyledLink></li>
                 <li><StyledLink to = "/About">About</StyledLink></li>                
                 {!isLoggedIn?<li><StyledLink to = "/Login">Login</StyledLink></li>:null}

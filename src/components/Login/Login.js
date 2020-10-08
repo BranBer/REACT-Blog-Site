@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import styles from './Login.module.scss';
 import axios from 'axios';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 import {GeneralContext} from '../GeneralContext';
 
 const Login = (props) =>
@@ -14,6 +14,7 @@ const Login = (props) =>
     });
 
     let myContext = useContext(GeneralContext);
+    let myHistory = useHistory();
 
     const loginHandler = () =>
     {
@@ -39,6 +40,7 @@ const Login = (props) =>
                     updateStatusMessage('Successfully Logged in as ' + response.data["username"]);          
                     updateIsLoggedIn(true);
                     myContext.executeLoadFunction();
+                    myHistory.goBack();
                 }
             )
             .catch(
@@ -113,10 +115,6 @@ const Login = (props) =>
             {!isLoggedIn?
             <button onClick = {loginHandler}>Login</button>:
             <button onClick = {logoutHandler}>Logout</button>
-            }
-
-            {isLoggedIn?
-            <Redirect to = "/Profile"/>: null
             }
 
             

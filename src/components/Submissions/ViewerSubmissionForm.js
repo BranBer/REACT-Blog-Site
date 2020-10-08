@@ -74,7 +74,7 @@ const ViewerSubmissionForm = (props) =>
         }
         else if(token == 'null' || token == null)
         {
-            updateStatusMsg('Login ');
+            updateStatusMsg('Login First to Post');
         }
         else
         {
