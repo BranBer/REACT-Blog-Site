@@ -7,10 +7,11 @@
     margin: 2em;
     padding: 2em;
     background-color: white;
-    width: 600px;
+    width: 60%;
     color: black;
     align-items: center;
     row-gap: 1em;
+    font-size:20px;
 
     box-shadow: 5px 5px 15px black;
 
@@ -25,6 +26,11 @@
             padding-right: 20px;
             text-align: right;
         }
+    }
+
+    sub{
+        font-weight: bold;
+        font-size: 18px;
     }
 
     hr

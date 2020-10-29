@@ -27,7 +27,7 @@
 .StaticDiv
 {
   display: flex;
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   right: 0;
   top: 25%;

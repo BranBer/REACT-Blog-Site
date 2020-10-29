@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import styles from './ViewerSubmissionForm.module.scss';
 import axios from 'axios';
 import { GeneralContext } from '../GeneralContext';
+import { Redirect } from 'react-router-dom';
 
 const ViewerSubmissionForm = (props) =>
 {
@@ -12,20 +13,36 @@ const ViewerSubmissionForm = (props) =>
         post_content: ''
     });
 
-    const [isAnonymous, updateIsAnonymous] = useState(false);
-
+    const [isAnonymous, updateIsAnonymous] = useState(sessionStorage.getItem('UserPostIsAnon') == 'true'?true:false);
+    const [redirectRegistration, updateRedirectRegistration] = useState(false);
     const [statusMsg, updateStatusMsg] = useState('');
+    const [showSubmission, updateShowSubmission] = useState(false);
+
+    useEffect(() => {
+        let token = sessionStorage.getItem('token');
+
+        if(token !== null && token !== 'null')
+        {
+            updateShowSubmission(true);
+        }
+        else
+        {
+            updateShowSubmission(false);
+        }
+    }, []);
 
     const handleTitleChange = (event) =>
     {
         let myPostData = postData;
         myPostData.post_title = event.target.value;
+        sessionStorage.setItem('UserPostTitle', event.target.value);
         updatePostData(myPostData);
     }
 
     const handleAnonymousChange = (event) =>
     {
         updateIsAnonymous(event.target.checked);
+        sessionStorage.setItem('UserPostIsAnon', event.target.checked);
     }
 
     const handleContentChange = (event) =>
@@ -33,6 +50,7 @@ const ViewerSubmissionForm = (props) =>
         let myPostData = postData;
         myPostData.post_content = event.target.value;
         updatePostData(myPostData);
+        sessionStorage.setItem('UserPostContent', event.target.value);
     }
 
     const submitPost = () =>
@@ -75,6 +93,7 @@ const ViewerSubmissionForm = (props) =>
         else if(token == 'null' || token == null)
         {
             updateStatusMsg('Login First to Post');
+            updateRedirectRegistration(true);
         }
         else
         {
@@ -85,30 +104,46 @@ const ViewerSubmissionForm = (props) =>
 
     return (
     <div className = {styles.ViewerSubmissionContainer}>
+
         <h2>Your Post</h2>
         <sub>Submit Your Post for Review</sub>
         <hr/>
 
-        <div className = {styles.inputAlign}>
-            <label>Post Title </label>
-            <input type = "text" onChange = {handleTitleChange}/>
-        </div>
+        {        
+            showSubmission?
+            <>
 
-        <br/>
+                <div className = {styles.inputAlign}>
+                    <label>Post Title </label>
+                    <input type = "text" onChange = {handleTitleChange} defaultValue = {sessionStorage.getItem('UserPostTitle')}/>
+                </div>
 
-        <div className = {styles.inputAlign}>
-            <label>Is Anonymous Post</label>
-            <input type = "checkbox" checked = {isAnonymous} onChange = {handleAnonymousChange}/>
-        </div>
-        
-        <br/>
+                <br/>
 
-    
-        <label>Your Post</label>
-        <textarea onChange = {handleContentChange}></textarea>
-        
-        <button onClick = {submitPost}>Submit Post</button>
-        <sub>{statusMsg}</sub>
+                <div className = {styles.inputAlign}>
+                    <label>Is Anonymous Post</label>
+                    <input type = "checkbox" checked = {isAnonymous} onChange = {handleAnonymousChange} />
+                </div>
+                
+                <br/>
+
+            
+                <label>Your Post</label>
+                <textarea onChange = {handleContentChange} defaultValue = {sessionStorage.getItem('UserPostContent')}></textarea>
+
+                </>: <p>You must login or register an account to submit posts</p>
+        }  
+                
+                <button onClick = {submitPost}>{showSubmission?'Submit Post':'Go to Login/Registration'}</button>
+                <sub>{statusMsg}</sub>
+     
+
+        {   
+            redirectRegistration?     
+                <Redirect to = '/Login'/>
+            : 
+                null
+        }
     </div>);
 }
 

@@ -10,7 +10,7 @@ const Gallery = styled.div`
 
     img
     {
-        height: 25em;
+        width: 90%;
 
         border-top: 3px solid black;
         border-bottom: 3px solid black;

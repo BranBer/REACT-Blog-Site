@@ -34,7 +34,6 @@ const SubmissionForm = (props) =>
 
         updateImages({count: numbers});
     }
-
     
     const updateNewImage = (id, img) =>
     {

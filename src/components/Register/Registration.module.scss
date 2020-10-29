@@ -2,10 +2,11 @@
 {
     background-color: white;
     margin: 2em;
-    width: 500px;
+    width: 60%;
     padding: 2em;
     border-radius: 15px;
     box-shadow: 5px 5px 10px black;
+    font-size: 20px;
 }
 
 .RegistrationContainer
@@ -13,6 +14,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+
 
     row-gap: 1em;
 
@@ -24,6 +27,7 @@
     button
     {
         color: white;
+        font-size: 16px;
         background-color: black;
     }
 }
@@ -32,6 +36,11 @@
 {
     display: flex;
     justify-content: space-around;
+    width: 60%;
+
+    input{
+        width: 75%;
+    }
         
         label
         {
@@ -44,10 +53,15 @@
 .ConfirmationParent
 {
     background-color:white;
-    width: 500px;
+    width: 60%;
     margin: 2em;
     padding: 2em;
     box-shadow: 5px 5px 15px black;
+    font-size: 20px;
+    
+    button{
+        font-size: 16px; 
+    }
 }
 
 .ConfirmationContainer

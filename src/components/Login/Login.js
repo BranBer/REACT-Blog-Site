@@ -6,7 +6,7 @@ import {GeneralContext} from '../GeneralContext';
 
 const Login = (props) =>
 {
-    const [statusMessage, updateStatusMessage] = useState('');
+    const [statusMessage, updateStatusMessage] = useState(props.location.state !== undefined?props.location.state.Message:'');
     const [isLoggedIn, updateIsLoggedIn] = useState(false);
     const [credentials, updateCredentials] = useState({
         username: '',
